@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>MIUMEOSHOP — Thời trang uy tín</title>
+<link rel="icon" type="image/png" href="images/favicon.png">
+<meta name="theme-color" content="#050711">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&display=swap');
+:root{--pink:#ff28ad;--hot:#ff54c7;--violet:#7b35ff;--cyan:#00dcff;--bg:#030611;--panel:#080f21;--line:rgba(255,255,255,.12);--muted:#8995ad}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 50% -10%,#29103b 0,#070b18 34%,#02040b 78%);color:#fff;font-family:"Be Vietnam Pro",Arial,sans-serif;overflow-x:hidden}
+body:after{content:"";position:fixed;inset:0;pointer-events:none;background:linear-gradient(115deg,rgba(255,30,173,.035),transparent 38%,rgba(0,220,255,.025));z-index:1}
+#snow{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:120}
+a{text-decoration:none;color:inherit}.container{max-width:1500px;margin:auto;padding:0 28px}
+.top{height:38px;border-bottom:1px solid var(--line);background:#02040b;display:flex;align-items:center;justify-content:space-between;padding:0 42px;font-size:11px;color:#e6e9f4;position:relative;z-index:10}
+.top .pink{color:#ff62ca;text-shadow:0 0 10px var(--pink)}.top-right{display:flex;gap:24px}
+header{position:sticky;top:0;z-index:80;background:rgba(3,6,17,.88);backdrop-filter:blur(22px);border-bottom:1px solid rgba(255,40,173,.16);box-shadow:0 12px 35px rgba(0,0,0,.25)}
+.head{height:96px;display:grid;grid-template-columns:360px 1fr 350px;align-items:center;gap:24px}
+.brand{height:78px;display:flex;align-items:center}.brand-logo{height:60px;width:auto;object-fit:contain;filter:drop-shadow(0 0 10px rgba(255,40,173,.25))}
+.search{height:50px;border:1px solid rgba(255,40,173,.38);background:#070d1d;border-radius:30px;display:flex;align-items:center;box-shadow:inset 0 0 25px rgba(255,40,173,.04),0 0 25px rgba(255,40,173,.08);overflow:hidden}
+.search-icon{font-size:23px;padding-left:18px}.search input{flex:1;border:0;outline:0;background:transparent;color:#fff;padding:0 12px;font-size:13px}.search button{height:50px;width:58px;border:0;color:#fff;font-size:21px;background:linear-gradient(135deg,var(--pink),var(--violet));box-shadow:0 0 25px rgba(255,40,173,.5)}
+.actions{display:flex;justify-content:flex-end;gap:22px}.act{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:700}.act b{font-size:25px;font-weight:500}.badge{background:var(--pink);border-radius:20px;padding:2px 6px;font-size:9px;box-shadow:0 0 12px var(--pink)}
+.navbar{height:56px;border-top:1px solid rgba(255,255,255,.07);border-bottom:1px solid rgba(255,255,255,.08);background:#060c1b}.nav{height:100%;display:flex;align-items:center;gap:7px;overflow:auto}.nav a{white-space:nowrap;padding:10px 18px;border-radius:12px;font-size:12px;font-weight:800;color:#dce3f3;transition:.2s}.nav a:hover,.nav a.active{background:linear-gradient(90deg,var(--pink),var(--violet));box-shadow:0 0 20px rgba(255,40,173,.38);color:#fff}.shop-now{margin-left:auto;background:linear-gradient(90deg,var(--pink),var(--violet))!important}
+.hero{position:relative;overflow:hidden;border-bottom:1px solid rgba(255,40,173,.2);background:radial-gradient(circle at 50% 50%,rgba(255,40,173,.17),transparent 30%),radial-gradient(circle at 50% 0,rgba(0,220,255,.1),transparent 45%),#030713}
+.hero:before,.hero:after{content:"";position:absolute;border-radius:50%;filter:blur(55px);opacity:.5}.hero:before{width:360px;height:360px;background:#ff159d;left:-120px;top:80px}.hero:after{width:360px;height:360px;background:#4e20ff;right:-130px;top:60px}
+.hero-inner{position:relative;z-index:3;display:flex;align-items:center;justify-content:center;text-align:center;padding:56px 0}
+.hero-copy{max-width:640px}.hero-logo{width:100%;max-width:540px;height:auto;border-radius:18px;box-shadow:0 25px 55px rgba(0,0,0,.45),0 0 40px rgba(255,40,173,.25);display:block;margin:0 auto}
+.hero p{color:#bdc7d9;font-size:13px;margin:16px auto 20px;max-width:46ch}.hero-buttons{display:flex;gap:10px;justify-content:center}.btn{border:0;border-radius:999px;padding:12px 21px;font-weight:900;font-size:11px}.btn.primary{background:linear-gradient(90deg,var(--pink),var(--violet));box-shadow:0 0 25px rgba(255,40,173,.4)}.btn.ghost{background:#091329;border:1px solid rgba(255,255,255,.15)}
+.deco{position:absolute;font-size:28px;color:#ff65ca;text-shadow:0 0 16px var(--pink);animation:float 3s ease-in-out infinite}.d1{left:15%;top:24%}.d2{right:16%;top:23%;animation-delay:.7s}.d3{left:22%;bottom:20%;animation-delay:1.1s}.d4{right:22%;bottom:18%;animation-delay:1.5s}
+@keyframes float{50%{transform:translateY(-12px) rotate(6deg)}}
+.trust{background:#040916;border-bottom:1px solid var(--line)}.trust-grid{display:grid;grid-template-columns:repeat(4,1fr)}.trust-item{min-height:76px;display:flex;justify-content:center;align-items:center;gap:12px;border-right:1px solid var(--line)}.trust-item:last-child{border:0}.trust-icon{width:45px;height:45px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle,#341047,#0d0a1e);border:1px solid #9e2d9d;box-shadow:0 0 20px rgba(255,40,173,.28);font-size:20px}.trust-item b{font-size:12px}.trust-item small{display:block;color:#77839b;font-size:9px;margin-top:2px}
+section{position:relative;z-index:2}.section{padding:48px 0}.section-head{display:flex;justify-content:space-between;align-items:end;margin-bottom:18px}.kicker{color:#ff52bd;font-size:10px;font-weight:900;letter-spacing:1px}.title{font-size:27px;font-weight:900;margin:4px 0}.sub{color:#7f8ca5;font-size:11px}.see{background:linear-gradient(90deg,var(--pink),var(--violet));padding:9px 15px;border-radius:999px;font-size:10px;font-weight:900;box-shadow:0 0 17px rgba(255,40,173,.25)}
+.filters{display:flex;gap:8px;margin-bottom:18px;overflow:auto}.pill{white-space:nowrap;padding:7px 13px;border:1px solid var(--line);border-radius:999px;background:#071024;color:#9eabc1;font-size:10px;font-weight:800}.pill.active,.pill:hover{background:#ff2fa8;color:#fff;border-color:#ff2fa8}
+.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:15px}.card{background:linear-gradient(180deg,#0b1730,#050c19);border:1px solid rgba(139,177,235,.14);border-radius:15px;overflow:hidden;transition:.25s;position:relative}.card:hover{transform:translateY(-7px);border-color:rgba(255,40,173,.6);box-shadow:0 22px 40px rgba(0,0,0,.4),0 0 25px rgba(255,40,173,.13)}.photo{aspect-ratio:4/5;background:linear-gradient(135deg,#111d35,#090d1a);position:relative;overflow:hidden}.photo img{width:100%;height:100%;object-fit:cover;display:block;transition:.4s}.card:hover .photo img{transform:scale(1.05)}.tag{position:absolute;top:9px;left:9px;background:linear-gradient(90deg,var(--pink),#ff6aca);padding:5px 8px;border-radius:7px;font-size:8px;font-weight:900;box-shadow:0 0 12px rgba(255,40,173,.45)}.heart{position:absolute;top:8px;right:8px;width:31px;height:31px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(2,5,12,.7);color:#fff}.info{padding:11px 12px 13px}.name{font-size:11px;font-weight:800;min-height:34px}.price{font-size:15px;font-weight:900;color:#fff}.old{font-size:9px;color:#647189;text-decoration:line-through;margin-left:5px}.row{display:flex;justify-content:space-between;align-items:center;margin-top:8px}.add{border:1px solid rgba(255,40,173,.5);background:transparent;color:#fff;border-radius:999px;padding:6px 10px;font-size:9px;font-weight:900}.add:hover{background:#ff2fa8;box-shadow:0 0 13px #ff2fa8}
+.banner{border:1px solid rgba(255,40,173,.2);border-radius:22px;overflow:hidden;background:radial-gradient(circle at 75% 30%,rgba(255,40,173,.2),transparent 30%),linear-gradient(110deg,#091126,#11071b);display:grid;grid-template-columns:1fr 1fr;min-height:250px}.banner-copy{padding:40px}.banner-copy h2{font-size:30px;margin:7px 0}.banner-copy p{font-size:11px;color:#8f9bb0;line-height:1.7}.banner-art{position:relative;background:radial-gradient(circle at center,rgba(0,220,255,.14),transparent 48%)}.orb{position:absolute;border-radius:50%;filter:blur(1px);box-shadow:0 0 50px #ff28ad}.orb.a{width:180px;height:180px;background:radial-gradient(circle,#ff5bc9,#6b1eff);left:30%;top:20%}.orb.b{width:90px;height:90px;background:#00dcff;right:15%;bottom:18%;box-shadow:0 0 40px #00dcff}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.step{padding:20px;border:1px solid var(--line);background:#071024;border-radius:15px}.num{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:#170a27;border:1px solid #ff2fa8;box-shadow:0 0 14px rgba(255,40,173,.25);font-weight:900}.step h4{font-size:12px}.step p{font-size:10px;color:#77849c;line-height:1.6}
+.music{position:fixed;left:14px;bottom:14px;z-index:100;display:flex;align-items:center;gap:10px;padding:9px 12px;background:rgba(4,8,20,.94);border:1px solid rgba(255,40,173,.7);border-radius:17px;box-shadow:0 0 30px rgba(255,40,173,.22);backdrop-filter:blur(16px)}.disc{width:42px;height:42px;border-radius:50%;background:radial-gradient(circle,#ff2fa8 0 10%,#061022 11% 30%,#ff2fa8 31% 35%,#18243a 36% 62%,#ff2fa8 63% 67%,#030711 68%);animation:spin 4s linear infinite;animation-play-state:paused}.music.playing .disc{animation-play-state:running}@keyframes spin{to{transform:rotate(360deg)}}.music button{width:35px;height:35px;border:0;border-radius:50%;background:linear-gradient(135deg,var(--pink),var(--violet));color:#fff}.music b{font-size:10px}.music small{display:block;color:#76839b;font-size:8px;margin-top:2px}
+footer{padding:45px 0 22px;border-top:1px solid var(--line);background:#02040b}.foot{display:grid;grid-template-columns:1.5fr repeat(3,1fr);gap:25px}.foot h4{font-size:11px;color:#68758c}.foot a,.foot p{font-size:10px;color:#8995aa;line-height:1.8}.copy{margin-top:25px;padding-top:17px;border-top:1px solid var(--line);font-size:9px;color:#566278;display:flex;justify-content:space-between}
+@media(max-width:1100px){.head{grid-template-columns:280px 1fr 250px}.grid{grid-template-columns:repeat(4,1fr)}}
+@media(max-width:850px){.top{padding:0 15px}.top-right{display:none}.head{height:auto;min-height:78px;grid-template-columns:1fr auto}.brand-logo{height:46px}.search{grid-column:1/-1;margin-bottom:12px}.actions{gap:10px}.actions .txt{display:none}.nav a{padding:10px 13px}.hero,.hero-inner{min-height:0}.trust-grid{grid-template-columns:1fr 1fr}.trust-item{justify-content:flex-start;padding:8px}.grid{grid-template-columns:repeat(2,1fr);gap:9px}.banner{grid-template-columns:1fr}.banner-art{display:none}.steps{grid-template-columns:1fr 1fr}.foot{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.container{padding:0 13px}.brand-logo{height:38px}.act b{font-size:22px}.hero{min-height:0}.hero-inner{min-height:0}.hero-logo{max-width:100%}.deco{font-size:20px}.d1{left:6%}.d2{right:6%}.trust-item b{font-size:9px}.trust-item small{font-size:7px}.trust-icon{width:36px;height:36px;font-size:16px}.section{padding:34px 0}.title{font-size:22px}.steps{grid-template-columns:1fr}.foot{grid-template-columns:1fr}.copy{display:block}.copy span{display:block;margin-top:5px}.music{left:7px;bottom:7px}}
+
+/* PRO polish */
+body{background:#03050b} .header{position:sticky;top:0;z-index:70;backdrop-filter:blur(18px);background:rgba(5,8,16,.92);box-shadow:0 12px 40px rgba(0,0,0,.28)}
+.logo{transition:.3s;filter:drop-shadow(0 0 14px rgba(0,210,255,.3))}.logo:hover{transform:scale(1.025);filter:drop-shadow(0 0 22px rgba(255,43,185,.55))}
+.search{transition:.25s}.search:focus-within{border-color:#ef39b4;box-shadow:0 0 0 3px rgba(239,57,180,.08),0 0 30px rgba(239,57,180,.14)}
+.hero-content>div{animation:heroIn .8s ease both}@keyframes heroIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+.hero button,.all,.add{transition:.22s}.hero button:hover,.all:hover{transform:translateY(-2px);box-shadow:0 0 35px rgba(245,27,169,.58)}
+.card{position:relative;box-shadow:0 8px 25px rgba(0,0,0,.18)}.card:after{content:"";position:absolute;inset:0;border-radius:13px;pointer-events:none;opacity:0;box-shadow:inset 0 0 0 1px rgba(255,72,193,.45);transition:.25s}.card:hover:after{opacity:1}.pic img{transition:.5s}.card:hover .pic img{transform:scale(1.055);filter:saturate(1.08)}
+.trust div{transition:.22s}.trust div:hover{background:rgba(255,36,178,.035)}.trust div:hover .ico{transform:translateY(-3px) scale(1.05);box-shadow:0 0 25px rgba(255,28,173,.5)}.ico{transition:.22s}
+.music{transition:.25s}.music:hover{transform:translateY(-2px);box-shadow:0 0 35px rgba(226,34,171,.35)}
+@media(max-width:700px){.music{bottom:8px}}
+</style>
+</head>
+<body>
+<canvas id="snow"></canvas>
+
+<div class="top">
+  <div>📣 <span class="pink">Chào mừng bạn đến với miumeoshop!</span>　★ Shop chuyên quần áo thời trang, giá tốt, chất lượng uy tín!</div>
+  <div class="top-right"><span>🚚 Miễn phí vận chuyển</span><span>🛡️ Đổi trả 7 ngày</span><span>🎧 Hỗ trợ 24/7</span></div>
+</div>
+
+<header>
+  <div class="container head">
+    <!-- Logo mới: images/logo.png (mặt mèo + chữ MIUMEOSHOP, nền trong suốt) -->
+    <a class="brand" href="#"><img class="brand-logo" src="images/logo.png" alt="MIUMEOSHOP"></a>
+    <div class="search"><span class="search-icon">⌕</span><input id="search" placeholder="Tìm kiếm sản phẩm..."><button onclick="goSearch()">⌕</button></div>
+    <div class="actions">
+      <a class="act" href="#"><b>♙</b><span class="txt">Đăng nhập</span></a>
+      <a class="act" href="#"><b>♡</b><span class="txt">Yêu thích</span></a>
+      <a class="act" href="#"><b>🛒</b><span class="badge" id="cartCount">0</span><span class="txt">Giỏ hàng</span></a>
+    </div>
+  </div>
+  <div class="navbar"><div class="container nav">
+    <a class="active" href="#">⌂ Trang chủ</a><a href="#products">♙ Áo nam</a><a href="#products">♧ Áo nữ</a><a href="#products">▱ Quần</a><a href="#products">♢ Váy</a><a href="#products">◉ Phụ kiện</a><a href="#products">☆ Hot trend</a><a href="#products">% Sale</a><a class="shop-now" href="#products">🔥 # Mua sắm ngay</a>
+  </div></div>
+</header>
+
+<section class="hero">
+  <div class="hero-inner container">
+    <span class="deco d1">✦</span><span class="deco d2">♡</span><span class="deco d3">✧</span><span class="deco d4">♢</span>
+    <div class="hero-copy">
+      <!-- Ảnh banner (images/logo.png) đã có sẵn chữ MIUMEOSHOP rất đẹp,
+           nên không cần thêm tiêu đề chữ nữa — tránh bị lặp/rối mắt -->
+      <img class="hero-logo" src="images/logo.png" alt="MIUMEOSHOP — Website mua bán quần áo uy tín">
+      <p>Thời trang là phong cách — là chính bạn. Chọn item yêu thích và tạo chất riêng của mình.</p>
+      <div class="hero-buttons"><a class="btn primary" href="#products">💗 KHÁM PHÁ SẢN PHẨM</a><a class="btn ghost" href="#steps">XEM ƯU ĐÃI</a></div>
+    </div>
+  </div>
+</section>
+
+<div class="trust"><div class="container trust-grid">
+  <div class="trust-item"><div class="trust-icon">🚚</div><div><b>Miễn phí vận chuyển</b><small>Cho đơn từ 300K</small></div></div>
+  <div class="trust-item"><div class="trust-icon">🛡️</div><div><b>Đổi trả trong 7 ngày</b><small>Nếu sản phẩm lỗi</small></div></div>
+  <div class="trust-item"><div class="trust-icon">💎</div><div><b>Chất lượng đảm bảo</b><small>Hàng thật 100%</small></div></div>
+  <div class="trust-item"><div class="trust-icon">🎧</div><div><b>Hỗ trợ 24/7</b><small>Tư vấn nhanh chóng</small></div></div>
+</div></div>
+
+<main>
+<section class="section" id="products"><div class="container">
+  <div class="section-head"><div><div class="kicker">🔥 HOT COLLECTION</div><div class="title">SẢN PHẨM NỔI BẬT</div><div class="sub">Những item được yêu thích nhất tại miumeoshop</div></div><a class="see" href="#">Xem tất cả →</a></div>
+  <div class="filters"><button class="pill active">Tất cả</button><button class="pill">Áo nam</button><button class="pill">Áo nữ</button><button class="pill">Quần</button><button class="pill">Váy</button><button class="pill">Phụ kiện</button></div>
+  <div class="grid" id="grid"></div>
+</div></section>
+
+<section class="section"><div class="container"><div class="banner">
+  <div class="banner-copy"><div class="kicker">✨ MIUMEOSHOP STYLE</div><h2>Diện đẹp mỗi ngày<br><span style="color:#ff4fbd">tỏa sáng theo cách riêng</span></h2><p>Thiết kế giao diện theo phong cách neon hồng — xanh đồng bộ với logo, nổi bật nhưng vẫn sạch và dễ mua sắm trên iPhone.</p><a class="btn primary" href="#products">MUA SẮM NGAY →</a></div>
+  <div class="banner-art"><div class="orb a"></div><div class="orb b"></div></div>
+</div></div></section>
+
+<section class="section" id="steps"><div class="container">
+  <div class="section-head"><div><div class="kicker">💗 TẠI SAO CHỌN CHÚNG MÌNH?</div><div class="title">MUA HÀNG THẬT DỄ</div></div></div>
+  <div class="steps"><div class="step"><div class="num">01</div><h4>Chọn sản phẩm</h4><p>Lọc theo danh mục và tìm item bạn thích.</p></div><div class="step"><div class="num">02</div><h4>Thêm vào giỏ</h4><p>Chọn sản phẩm và thêm vào giỏ hàng.</p></div><div class="step"><div class="num">03</div><h4>Đặt hàng</h4><p>Kiểm tra đơn và hoàn tất thông tin.</p></div><div class="step"><div class="num">04</div><h4>Nhận hàng</h4><p>Đóng gói cẩn thận, hỗ trợ nhanh chóng.</p></div></div>
+</div></section>
+</main>
+
+<div class="music" id="musicBox"><div class="disc"></div><div><b>Đang phát: Miumeoshop</b><small>Music makes everything better ♡</small></div><button id="musicBtn">▶</button><audio id="audio" preload="auto" loop src="nhac_nen.mp3"></audio></div>
+
+<footer><div class="container foot">
+  <div><img src="images/logo.png" alt="MIUMEOSHOP" style="height:44px;width:auto;margin-bottom:10px"><p>Website mua bán quần áo uy tín.<br>Phong cách neon hồng — xanh dành riêng cho miumeoshop.</p></div>
+  <div><h4>MUA SẮM</h4><a href="#products">Áo nam</a><br><a href="#products">Áo nữ</a><br><a href="#products">Quần</a><br><a href="#products">Váy</a></div>
+  <div><h4>HỖ TRỢ</h4><a href="#">Hướng dẫn mua hàng</a><br><a href="#">Đổi trả</a><br><a href="#">Liên hệ</a></div>
+  <div><h4>KẾT NỐI</h4><a href="#">Facebook</a><br><a href="#">TikTok</a><br><a href="#">Messenger</a></div>
+</div><div class="container copy"><span>© 2026 MIUMEOSHOP</span><span>Made with 💗</span></div></footer>
+
+<script>
+// Danh sách sản phẩm — mỗi dòng: [slug ảnh, tên sản phẩm, giá bán, giá gạch ngang]
+// Ảnh tự nhận theo slug trong images/products/ (đuôi .jpg/.jpeg/.webp/.png đều được)
+const products=[
+ ['ao-thun-basic','Áo thun basic form rộng','149.000đ','189.000đ'],
+ ['hoodie-graffiti','Hoodie Graffiti Hot Trend','299.000đ','359.000đ'],
+ ['ao-khoac-den','Áo khoác phối đen cá tính','329.000đ','399.000đ'],
+ ['sweater-acne','Sweater basic premium','259.000đ','319.000đ'],
+ ['ao-khoac-den-2','Áo khoác streetwear','349.000đ','429.000đ'],
+ ['quan-jogger','Quần jogger form rộng','239.000đ','289.000đ'],
+ ['ao-nu-crop','Áo nữ crop top trendy','159.000đ','199.000đ'],
+ ['vay-den','Váy đen phong cách','279.000đ','339.000đ'],
+ ['tui-mini','Túi mini phối outfit','199.000đ','249.000đ'],
+ ['mu-bucket','Mũ bucket thời trang','119.000đ','159.000đ']
+];
+const grid=document.getElementById('grid');
+function findImage(slug,img){
+  const exts=['jpg','jpeg','webp','png'];
+  let i=0; function next(){if(i>=exts.length){img.parentElement.style.background='linear-gradient(135deg,#17102b,#08152a)';return}
+    const t=new Image(); t.onload=()=>img.src=t.src; t.onerror=()=>{i++;next()}; t.src='images/products/'+slug+'.'+exts[i++];}
+  next();
+}
+products.forEach(p=>{
+  const card=document.createElement('article');card.className='card';card.dataset.name=p[1].toLowerCase();
+  card.innerHTML=`<div class="photo"><span class="tag">HOT</span><button class="heart">♡</button><img alt="${p[1]}" loading="lazy"></div><div class="info"><div class="name">${p[1]}</div><div class="price">${p[2]} <span class="old">${p[3]}</span></div><div class="row"><span style="font-size:9px;color:#7b879d">★ 4.9　Đã bán 120+</span><button class="add">+ Thêm giỏ</button></div></div>`;
+  grid.appendChild(card);findImage(p[0],card.querySelector('img'));
+  card.querySelector('.add').onclick=()=>{let n=+document.getElementById('cartCount').textContent||0;document.getElementById('cartCount').textContent=n+1;card.querySelector('.add').textContent='✓ Đã thêm';setTimeout(()=>card.querySelector('.add').textContent='+ Thêm giỏ',900)}
+});
+function goSearch(){document.getElementById('products').scrollIntoView({behavior:'smooth'})}
+document.getElementById('search').addEventListener('input',e=>{let q=e.target.value.toLowerCase().trim();document.querySelectorAll('.card').forEach(c=>c.style.display=!q||c.dataset.name.includes(q)?'':'none')});
+
+// Nhạc nền — file đang dùng: nhac_nen.mp3 (đặt ngay gốc repo, cạnh index.html)
+// Music: browser may block autoplay; first user touch starts it.
+const audio=document.getElementById('audio'), box=document.getElementById('musicBox'), mb=document.getElementById('musicBtn');
+async function playMusic(){try{await audio.play();box.classList.add('playing');mb.textContent='Ⅱ'}catch(e){}}
+mb.onclick=()=>audio.paused?playMusic():(audio.pause(),box.classList.remove('playing'),mb.textContent='▶');
+['click','touchstart','pointerdown'].forEach(ev=>document.addEventListener(ev,()=>{if(audio.paused)playMusic()},{once:true,passive:true}));
+
+// Snow effect — nhẹ trên iPhone, dày hơn trên màn hình lớn.
+const c=document.getElementById('snow'),ctx=c.getContext('2d');let flakes=[];
+function resize(){c.width=innerWidth*devicePixelRatio;c.height=innerHeight*devicePixelRatio;ctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);let count=innerWidth<600?55:105;flakes=Array.from({length:count},()=>({x:Math.random()*innerWidth,y:Math.random()*innerHeight,r:Math.random()*2.8+.7,s:Math.random()*1.25+.35,w:Math.random()*1.2-.6,o:Math.random()*.7+.25,t:Math.random()*6.28}))}
+function snow(){ctx.clearRect(0,0,innerWidth,innerHeight);for(const f of flakes){f.y+=f.s;f.x+=Math.sin(f.t+=.012)*.25+f.w*.12;if(f.y>innerHeight+8){f.y=-8;f.x=Math.random()*innerWidth}if(f.x<-8)f.x=innerWidth+8;if(f.x>innerWidth+8)f.x=-8;ctx.beginPath();ctx.fillStyle=`rgba(255,255,255,${f.o})`;ctx.shadowBlur=7;ctx.shadowColor='rgba(255,130,220,.8)';ctx.arc(f.x,f.y,f.r,0,Math.PI*2);ctx.fill()}requestAnimationFrame(snow)}
+addEventListener('resize',resize);resize();snow();
+</script>
+</body></html>
