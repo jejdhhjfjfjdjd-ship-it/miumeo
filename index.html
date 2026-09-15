@@ -256,7 +256,7 @@ footer{position:relative;z-index:2}
   <div class="cart-foot">
     <div class="cart-subtotal"><span>Tạm tính</span><span id="cartSubtotal">0đ</span></div>
     <button class="btn primary" onclick="checkoutVia('zalo')">💬 Đặt hàng qua Zalo</button>
-    <button class="btn ghost" style="margin-top:9px" onclick="checkoutVia('messenger')">💬 Đặt hàng qua Messenger</button>
+    <button class="btn ghost" style="margin-top:9px" onclick="checkoutVia('instagram')">📸 Đặt hàng qua Instagram</button>
   </div>
 </aside>
 
@@ -286,11 +286,11 @@ footer{position:relative;z-index:2}
 </div>
 
 <footer><div class="container foot">
-  <!-- Thay 4 href="#" trong .social-row bằng link Facebook/Instagram/TikTok/Messenger thật của shop -->
+  <!-- Thay 4 href="#" trong .social-row bằng link Zalo/Instagram/TikTok thật của shop -->
   <div><img src="images/logo.png" alt="MIUMEOSHOP" style="height:44px;width:auto;margin-bottom:10px"><p>Website mua bán quần áo uy tín.<br>Phong cách neon hồng — xanh dành riêng cho miumeoshop.</p></div>
   <div><h4>MUA SẮM</h4><a href="#products">Áo nam</a><br><a href="#products">Áo nữ</a><br><a href="#products">Quần</a><br><a href="#products">Váy</a></div>
   <div><h4>HỖ TRỢ</h4><a href="#">Hướng dẫn mua hàng</a><br><a href="#">Đổi trả</a><br><a href="#">Liên hệ</a></div>
-  <div><h4>KẾT NỐI</h4><div class="social-row"><a class="social-ic" href="#" title="Facebook">f</a><a class="social-ic" href="#" title="Instagram">◎</a><a class="social-ic" href="#" title="TikTok">♪</a><a class="social-ic" href="#" title="Messenger">✆</a></div></div>
+  <div><h4>KẾT NỐI</h4><div class="social-row"><a class="social-ic" href="https://zalo.me/0978693644" target="_blank" rel="noopener" title="Zalo">Z</a><a class="social-ic" href="https://www.instagram.com/miumeoshop_/" target="_blank" rel="noopener" title="Instagram">◎</a><a class="social-ic" href="#" title="TikTok">♪</a></div></div>
 </div><div class="container copy"><span>© 2026 MIUMEOSHOP</span><span>Made with 💗</span></div></footer>
 
 <script>
@@ -350,7 +350,7 @@ products.forEach(p=>{
 // ============================================================
 // GIỎ HÀNG — bấm "+ Thêm giỏ" sẽ lưu vào đây (chỉ lưu tạm trong
 // phiên xem trang, tải lại trang là mất — vì web tĩnh không có
-// database). Khách bấm "Đặt hàng qua Zalo/Messenger" thì web tự
+// database). Khách bấm "Đặt hàng qua Zalo/Instagram" thì web tự
 // soạn sẵn nội dung đơn hàng, copy vào bộ nhớ tạm rồi mở khung chat.
 //
 // NHỚ ĐIỀN LINK ZALO/MESSENGER THẬT CỦA SHOP Ở 2 DÒNG DƯỚI, không
@@ -358,8 +358,8 @@ products.forEach(p=>{
 // Link Zalo mẫu: https://zalo.me/0901234567
 // Link Messenger mẫu: https://m.me/tenfanpage
 // ============================================================
-const ZALO_LINK ='https://zalo.me/0978693644';
-const MESSENGER_LINK = '';
+const ZALO_LINK = 'https://zalo.me/0978693644';
+const INSTAGRAM_LINK = 'https://www.instagram.com/miumeoshop_/';
 
 let cart=[];
 function formatPrice(n){ return n.toLocaleString('vi-VN')+'đ'; }
@@ -408,10 +408,15 @@ function buildOrderText(){
 function checkoutVia(channel){
   if(cart.length===0){ alert('Giỏ hàng đang trống, chọn sản phẩm trước nhé!'); return; }
   const text = buildOrderText();
-  const link = channel==='zalo' ? ZALO_LINK : MESSENGER_LINK;
+  const link = channel==='zalo' ? ZALO_LINK : INSTAGRAM_LINK;
   navigator.clipboard?.writeText(text).catch(()=>{});
-  if(link){ alert('Đã copy nội dung đơn hàng — dán vào khung chat khi cửa sổ mới mở ra nhé!'); window.open(link,'_blank'); }
-  else{ alert('Đã copy nội dung đơn hàng vào bộ nhớ tạm.\nShop chưa gắn link Zalo/Messenger — mở comment đầu <script>, điền vào ZALO_LINK / MESSENGER_LINK.'); }
+  if(link){
+    alert('Đã copy nội dung đơn hàng — dán vào khung chat khi cửa sổ mới mở ra nhé!');
+    window.open(link,'_blank');
+  } else {
+    alert('Đã copy nội dung đơn hàng vào bộ nhớ tạm.
+Shop chưa gắn link liên hệ.');
+  }
 }
 function goSearch(){document.getElementById('products').scrollIntoView({behavior:'smooth'})}
 document.getElementById('search').addEventListener('input',e=>{let q=e.target.value.toLowerCase().trim();document.querySelectorAll('.card').forEach(c=>c.style.display=!q||c.dataset.name.includes(q)?'':'none')});
