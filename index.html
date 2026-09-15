@@ -36,7 +36,30 @@ section{position:relative;z-index:2}.section{padding:48px 0}.section-head{displa
 .banner{border:1px solid rgba(255,40,173,.2);border-radius:22px;overflow:hidden;background:radial-gradient(circle at 75% 30%,rgba(255,40,173,.2),transparent 30%),linear-gradient(110deg,#091126,#11071b);display:grid;grid-template-columns:1fr 1fr;min-height:250px}.banner-copy{padding:40px}.banner-copy h2{font-size:30px;margin:7px 0}.banner-copy p{font-size:11px;color:#8f9bb0;line-height:1.7}.banner-art{position:relative;background:radial-gradient(circle at center,rgba(0,220,255,.14),transparent 48%)}.orb{position:absolute;border-radius:50%;filter:blur(1px);box-shadow:0 0 50px #ff28ad}.orb.a{width:180px;height:180px;background:radial-gradient(circle,#ff5bc9,#6b1eff);left:30%;top:20%}.orb.b{width:90px;height:90px;background:#00dcff;right:15%;bottom:18%;box-shadow:0 0 40px #00dcff}
 .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.step{padding:20px;border:1px solid var(--line);background:#071024;border-radius:15px}.num{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:#170a27;border:1px solid #ff2fa8;box-shadow:0 0 14px rgba(255,40,173,.25);font-weight:900}.step h4{font-size:12px}.step p{font-size:10px;color:#77849c;line-height:1.6}
 .music{position:fixed;left:14px;bottom:14px;z-index:100;display:flex;align-items:center;gap:10px;padding:9px 12px;background:rgba(4,8,20,.94);border:1px solid rgba(255,40,173,.7);border-radius:17px;box-shadow:0 0 30px rgba(255,40,173,.22);backdrop-filter:blur(16px)}.disc{width:42px;height:42px;border-radius:50%;background:radial-gradient(circle,#ff2fa8 0 10%,#061022 11% 30%,#ff2fa8 31% 35%,#18243a 36% 62%,#ff2fa8 63% 67%,#030711 68%);animation:spin 4s linear infinite;animation-play-state:paused}.music.playing .disc{animation-play-state:running}@keyframes spin{to{transform:rotate(360deg)}}.music button{width:35px;height:35px;border:0;border-radius:50%;background:linear-gradient(135deg,var(--pink),var(--violet));color:#fff}.music b{font-size:10px}.music small{display:block;color:#76839b;font-size:8px;margin-top:2px}
+
+/* ---- giỏ hàng ---- */
+.cart-overlay{position:fixed;inset:0;background:rgba(2,4,10,.6);z-index:200;opacity:0;pointer-events:none;transition:.25s}
+.cart-overlay.open{opacity:1;pointer-events:auto}
+.cart-drawer{position:fixed;top:0;right:0;height:100%;width:380px;max-width:90vw;background:#080f21;border-left:1px solid rgba(255,40,173,.35);z-index:201;transform:translateX(100%);transition:.3s;display:flex;flex-direction:column;box-shadow:-20px 0 50px rgba(0,0,0,.5)}
+.cart-drawer.open{transform:translateX(0)}
+.cart-head{display:flex;justify-content:space-between;align-items:center;padding:18px 18px 14px;border-bottom:1px solid var(--line);font-size:15px}
+.cart-head button{background:none;border:0;color:#fff;font-size:18px}
+.cart-items{flex:1;overflow-y:auto;padding:10px 18px}
+.cart-items .empty{color:var(--muted);font-size:12.5px;text-align:center;padding:30px 0}
+.cart-item{padding:12px 0;border-bottom:1px solid var(--line)}
+.ci-name{font-size:12.5px;font-weight:700;margin-bottom:8px}
+.ci-row{display:flex;align-items:center;gap:10px}
+.qty{display:flex;align-items:center;gap:8px;background:#0d1730;border-radius:999px;padding:4px 10px}
+.qty button{width:20px;height:20px;border:0;border-radius:50%;background:rgba(255,255,255,.1);color:#fff;font-size:13px;line-height:1}
+.qty span{font-size:12px;min-width:14px;text-align:center}
+.ci-price{flex:1;text-align:right;font-size:12.5px;font-weight:800}
+.ci-remove{background:none;border:0;color:#647189;font-size:14px}
+.ci-remove:hover{color:#ff6a7a}
+.cart-foot{padding:16px 18px 20px;border-top:1px solid var(--line)}
+.cart-subtotal{display:flex;justify-content:space-between;font-size:14px;font-weight:800;margin-bottom:14px}
+.cart-foot .btn{width:100%;display:block;text-align:center}
 footer{padding:45px 0 22px;border-top:1px solid var(--line);background:#02040b}.foot{display:grid;grid-template-columns:1.5fr repeat(3,1fr);gap:25px}.foot h4{font-size:11px;color:#68758c}.foot a,.foot p{font-size:10px;color:#8995aa;line-height:1.8}.copy{margin-top:25px;padding-top:17px;border-top:1px solid var(--line);font-size:9px;color:#566278;display:flex;justify-content:space-between}
+.social-row{display:flex;gap:10px;margin-top:6px}.social-ic{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;background:#0d1730;border:1px solid rgba(255,255,255,.12);color:#dce3f3;transition:.2s}.social-ic:hover{background:linear-gradient(135deg,var(--pink),var(--violet));border-color:transparent;box-shadow:0 0 18px rgba(255,40,173,.5);transform:translateY(-3px)}
 @media(max-width:1100px){.head{grid-template-columns:280px 1fr 250px}.grid{grid-template-columns:repeat(4,1fr)}}
 @media(max-width:850px){.top{padding:0 15px}.top-right{display:none}.head{height:auto;min-height:78px;grid-template-columns:1fr auto}.brand-logo{height:46px}.search{grid-column:1/-1;margin-bottom:12px}.actions{gap:10px}.actions .txt{display:none}.nav a{padding:10px 13px}.hero,.hero-inner{min-height:0}.trust-grid{grid-template-columns:1fr 1fr}.trust-item{justify-content:flex-start;padding:8px}.grid{grid-template-columns:repeat(2,1fr);gap:9px}.banner{grid-template-columns:1fr}.banner-art{display:none}.steps{grid-template-columns:1fr 1fr}.foot{grid-template-columns:1fr 1fr}}
 @media(max-width:520px){.container{padding:0 13px}.brand-logo{height:38px}.act b{font-size:22px}.hero{min-height:0}.hero-inner{min-height:0}.hero-logo{max-width:100%}.deco{font-size:20px}.d1{left:6%}.d2{right:6%}.trust-item b{font-size:9px}.trust-item small{font-size:7px}.trust-icon{width:36px;height:36px;font-size:16px}.section{padding:34px 0}.title{font-size:22px}.steps{grid-template-columns:1fr}.foot{grid-template-columns:1fr}.copy{display:block}.copy span{display:block;margin-top:5px}.music{left:7px;bottom:7px}}
@@ -67,13 +90,13 @@ body{background:#03050b} .header{position:sticky;top:0;z-index:70;backdrop-filte
     <a class="brand" href="#"><img class="brand-logo" src="images/logo.png" alt="MIUMEOSHOP"></a>
     <div class="search"><span class="search-icon">⌕</span><input id="search" placeholder="Tìm kiếm sản phẩm..."><button onclick="goSearch()">⌕</button></div>
     <div class="actions">
-      <a class="act" href="#"><b>♙</b><span class="txt">Đăng nhập</span></a>
+      <a class="act" href="#"><b>👤</b><span class="txt">Đăng nhập</span></a>
       <a class="act" href="#"><b>♡</b><span class="txt">Yêu thích</span></a>
-      <a class="act" href="#"><b>🛒</b><span class="badge" id="cartCount">0</span><span class="txt">Giỏ hàng</span></a>
+      <a class="act" href="#" id="cartOpenBtn"><b>🛒</b><span class="badge" id="cartCount">0</span><span class="txt">Giỏ hàng</span></a>
     </div>
   </div>
   <div class="navbar"><div class="container nav">
-    <a class="active" href="#">⌂ Trang chủ</a><a href="#products">♙ Áo nam</a><a href="#products">♧ Áo nữ</a><a href="#products">▱ Quần</a><a href="#products">♢ Váy</a><a href="#products">◉ Phụ kiện</a><a href="#products">☆ Hot trend</a><a href="#products">% Sale</a><a class="shop-now" href="#products">🔥 # Mua sắm ngay</a>
+    <a class="active" href="#">⌂ Trang chủ</a><a href="#products">👕 Áo nam</a><a href="#products">👚 Áo nữ</a><a href="#products">👖 Quần</a><a href="#products">👗 Váy</a><a href="#products">👜 Phụ kiện</a><a href="#products">⭐ Hot trend</a><a href="#products">🏷️ Sale</a><a class="shop-now" href="#products">🔥 Mua sắm ngay</a>
   </div></div>
 </header>
 
@@ -100,7 +123,7 @@ body{background:#03050b} .header{position:sticky;top:0;z-index:70;backdrop-filte
 <main>
 <section class="section" id="products"><div class="container">
   <div class="section-head"><div><div class="kicker">🔥 HOT COLLECTION</div><div class="title">SẢN PHẨM NỔI BẬT</div><div class="sub">Những item được yêu thích nhất tại miumeoshop</div></div><a class="see" href="#">Xem tất cả →</a></div>
-  <div class="filters"><button class="pill active">Tất cả</button><button class="pill">Áo nam</button><button class="pill">Áo nữ</button><button class="pill">Quần</button><button class="pill">Váy</button><button class="pill">Phụ kiện</button></div>
+  <div class="filters"><button class="pill active" data-cat="all">Tất cả</button><button class="pill" data-cat="nam">Áo nam</button><button class="pill" data-cat="nu">Áo nữ</button><button class="pill" data-cat="quan">Quần</button><button class="pill" data-cat="vay">Váy</button><button class="pill" data-cat="phukien">Phụ kiện</button></div>
   <div class="grid" id="grid"></div>
 </div></section>
 
@@ -117,27 +140,61 @@ body{background:#03050b} .header{position:sticky;top:0;z-index:70;backdrop-filte
 
 <div class="music" id="musicBox"><div class="disc"></div><div><b>Đang phát: Miumeoshop</b><small>Music makes everything better ♡</small></div><button id="musicBtn">▶</button><audio id="audio" preload="auto" loop src="nhac_nen.mp3"></audio></div>
 
+<!-- Giỏ hàng thật: bấm icon giỏ ở header để mở -->
+<div class="cart-overlay" id="cartOverlay"></div>
+<aside class="cart-drawer" id="cartDrawer">
+  <div class="cart-head"><b>Giỏ hàng của bạn</b><button id="cartCloseBtn">✕</button></div>
+  <div class="cart-items" id="cartItems"><div class="empty">Giỏ hàng đang trống.</div></div>
+  <div class="cart-foot">
+    <div class="cart-subtotal"><span>Tạm tính</span><span id="cartSubtotal">0đ</span></div>
+    <button class="btn primary" onclick="checkoutVia('zalo')">💬 Đặt hàng qua Zalo</button>
+    <button class="btn ghost" style="margin-top:9px" onclick="checkoutVia('messenger')">💬 Đặt hàng qua Messenger</button>
+  </div>
+</aside>
+
 <footer><div class="container foot">
+  <!-- Thay 4 href="#" trong .social-row bằng link Facebook/Instagram/TikTok/Messenger thật của shop -->
   <div><img src="images/logo.png" alt="MIUMEOSHOP" style="height:44px;width:auto;margin-bottom:10px"><p>Website mua bán quần áo uy tín.<br>Phong cách neon hồng — xanh dành riêng cho miumeoshop.</p></div>
   <div><h4>MUA SẮM</h4><a href="#products">Áo nam</a><br><a href="#products">Áo nữ</a><br><a href="#products">Quần</a><br><a href="#products">Váy</a></div>
   <div><h4>HỖ TRỢ</h4><a href="#">Hướng dẫn mua hàng</a><br><a href="#">Đổi trả</a><br><a href="#">Liên hệ</a></div>
-  <div><h4>KẾT NỐI</h4><a href="#">Facebook</a><br><a href="#">TikTok</a><br><a href="#">Messenger</a></div>
+  <div><h4>KẾT NỐI</h4><div class="social-row"><a class="social-ic" href="#" title="Facebook">f</a><a class="social-ic" href="#" title="Instagram">◎</a><a class="social-ic" href="#" title="TikTok">♪</a><a class="social-ic" href="#" title="Messenger">✆</a></div></div>
 </div><div class="container copy"><span>© 2026 MIUMEOSHOP</span><span>Made with 💗</span></div></footer>
 
 <script>
-// Danh sách sản phẩm — mỗi dòng: [slug ảnh, tên sản phẩm, giá bán, giá gạch ngang]
-// Ảnh tự nhận theo slug trong images/products/ (đuôi .jpg/.jpeg/.webp/.png đều được)
+// ============================================================
+// DANH SÁCH SẢN PHẨM — thêm sản phẩm mới: copy 1 dòng rồi sửa lại.
+//   slug   : dùng để tự nhận ảnh trong images/products/<slug>.<đuôi>
+//            (đuôi .jpg/.jpeg/.webp/.png đều được, không cần sửa code)
+//   name   : tên hiển thị
+//   price / oldPrice : giá bán / giá gạch ngang (để '' nếu không sale)
+//   cat    : "nam" | "nu" | "quan" | "vay" | "phukien"  (khớp nút lọc)
+//   hot    : true nếu muốn gắn nhãn "HOT" (đừng gắn hết mọi món kẻo
+//            mất tác dụng nổi bật)
+//   sold   : số lượt "Đã bán" hiển thị trên thẻ sản phẩm
+// ============================================================
 const products=[
- ['ao-thun-basic','Áo thun basic form rộng','149.000đ','189.000đ'],
- ['hoodie-graffiti','Hoodie Graffiti Hot Trend','299.000đ','359.000đ'],
- ['ao-khoac-den','Áo khoác phối đen cá tính','329.000đ','399.000đ'],
- ['sweater-acne','Sweater basic premium','259.000đ','319.000đ'],
- ['ao-khoac-den-2','Áo khoác streetwear','349.000đ','429.000đ'],
- ['quan-jogger','Quần jogger form rộng','239.000đ','289.000đ'],
- ['ao-nu-crop','Áo nữ crop top trendy','159.000đ','199.000đ'],
- ['vay-den','Váy đen phong cách','279.000đ','339.000đ'],
- ['tui-mini','Túi mini phối outfit','199.000đ','249.000đ'],
- ['mu-bucket','Mũ bucket thời trang','119.000đ','159.000đ']
+ {slug:'ao-thun-basic',   name:'Áo thun basic form rộng',      price:'149.000đ', oldPrice:'189.000đ', cat:'nam', hot:true,  sold:210},
+ {slug:'hoodie-graffiti', name:'Hoodie Graffiti Hot Trend',    price:'299.000đ', oldPrice:'359.000đ', cat:'nam', hot:true,  sold:186},
+ {slug:'ao-khoac-den',    name:'Áo khoác phối đen cá tính',    price:'329.000đ', oldPrice:'399.000đ', cat:'nam', hot:false, sold:94},
+ {slug:'sweater-acne',    name:'Sweater basic premium',        price:'259.000đ', oldPrice:'319.000đ', cat:'nu',  hot:false, sold:132},
+ {slug:'ao-khoac-den-2',  name:'Áo khoác streetwear',          price:'349.000đ', oldPrice:'429.000đ', cat:'nam', hot:false, sold:77},
+ {slug:'quan-jogger',     name:'Quần jogger form rộng',        price:'239.000đ', oldPrice:'289.000đ', cat:'quan',hot:true,  sold:158},
+ {slug:'ao-nu-crop',      name:'Áo nữ crop top trendy',        price:'159.000đ', oldPrice:'199.000đ', cat:'nu',  hot:true,  sold:203},
+ {slug:'vay-den',         name:'Váy đen phong cách',           price:'279.000đ', oldPrice:'339.000đ', cat:'vay', hot:false, sold:68},
+ {slug:'tui-mini',        name:'Túi mini phối outfit',         price:'199.000đ', oldPrice:'249.000đ', cat:'phukien', hot:false, sold:121},
+ {slug:'mu-bucket',       name:'Mũ bucket thời trang',         price:'119.000đ', oldPrice:'159.000đ', cat:'phukien', hot:false, sold:145},
+ {slug:'quan-jean-ong-rong', name:'Quần jean ống rộng',        price:'329.000đ', oldPrice:'389.000đ', cat:'quan',hot:false, sold:59},
+ {slug:'ao-so-mi-oversize',  name:'Áo sơ mi oversize basic',   price:'219.000đ', oldPrice:'269.000đ', cat:'nam', hot:false, sold:88},
+ {slug:'vay-hoa-mini',       name:'Váy hoa mini xinh xắn',     price:'249.000đ', oldPrice:'299.000đ', cat:'vay', hot:true,  sold:167},
+ {slug:'ao-len-basic',       name:'Áo len basic cổ tròn',      price:'229.000đ', oldPrice:'279.000đ', cat:'nu',  hot:false, sold:103},
+ {slug:'that-lung-da',       name:'Thắt lưng da phối khoá',    price:'99.000đ',  oldPrice:'139.000đ', cat:'phukien', hot:false, sold:74},
+ {slug:'quan-short-the-thao',name:'Quần short thể thao',       price:'139.000đ', oldPrice:'179.000đ', cat:'quan',hot:false, sold:112},
+ // --- 5 sản phẩm mới thêm (từ ảnh bạn gửi, đã bỏ tên thương hiệu) ---
+ {slug:'hoodie-phoi-chu-den', name:'Hoodie phối chữ form rộng - Đen', price:'329.000đ', oldPrice:'399.000đ', cat:'nam', hot:true,  sold:96},
+ {slug:'hoodie-phoi-chu-xam', name:'Hoodie phối chữ form rộng - Xám', price:'329.000đ', oldPrice:'399.000đ', cat:'nam', hot:false, sold:61},
+ {slug:'ao-khoac-denim-dinh-huy-hieu', name:'Áo khoác denim đính huy hiệu', price:'389.000đ', oldPrice:'459.000đ', cat:'nam', hot:false, sold:47},
+ {slug:'ao-khoac-bomber-phoi-soc-be', name:'Áo khoác bomber phối sọc - Be', price:'419.000đ', oldPrice:'489.000đ', cat:'nam', hot:true,  sold:73},
+ {slug:'ao-khoac-bomber-phoi-soc-den', name:'Áo khoác bomber phối sọc - Đen', price:'419.000đ', oldPrice:'489.000đ', cat:'nam', hot:false, sold:52},
 ];
 const grid=document.getElementById('grid');
 function findImage(slug,img){
@@ -147,20 +204,113 @@ function findImage(slug,img){
   next();
 }
 products.forEach(p=>{
-  const card=document.createElement('article');card.className='card';card.dataset.name=p[1].toLowerCase();
-  card.innerHTML=`<div class="photo"><span class="tag">HOT</span><button class="heart">♡</button><img alt="${p[1]}" loading="lazy"></div><div class="info"><div class="name">${p[1]}</div><div class="price">${p[2]} <span class="old">${p[3]}</span></div><div class="row"><span style="font-size:9px;color:#7b879d">★ 4.9　Đã bán 120+</span><button class="add">+ Thêm giỏ</button></div></div>`;
-  grid.appendChild(card);findImage(p[0],card.querySelector('img'));
-  card.querySelector('.add').onclick=()=>{let n=+document.getElementById('cartCount').textContent||0;document.getElementById('cartCount').textContent=n+1;card.querySelector('.add').textContent='✓ Đã thêm';setTimeout(()=>card.querySelector('.add').textContent='+ Thêm giỏ',900)}
+  const card=document.createElement('article');card.className='card';card.dataset.name=p.name.toLowerCase();card.dataset.cat=p.cat;
+  const oldPriceHtml=p.oldPrice?`<span class="old">${p.oldPrice}</span>`:'';
+  const tagHtml=p.hot?'<span class="tag">HOT</span>':'';
+  card.innerHTML=`<div class="photo">${tagHtml}<button class="heart">♡</button><img alt="${p.name}" loading="lazy"></div><div class="info"><div class="name">${p.name}</div><div class="price">${p.price} ${oldPriceHtml}</div><div class="row"><span style="font-size:9px;color:#7b879d">★ 4.9　Đã bán ${p.sold}+</span><button class="add">+ Thêm giỏ</button></div></div>`;
+  grid.appendChild(card);findImage(p.slug,card.querySelector('img'));
+  card.querySelector('.add').onclick=()=>{addToCart(p);card.querySelector('.add').textContent='✓ Đã thêm';setTimeout(()=>card.querySelector('.add').textContent='+ Thêm giỏ',900)}
 });
+
+// ============================================================
+// GIỎ HÀNG — bấm "+ Thêm giỏ" sẽ lưu vào đây (chỉ lưu tạm trong
+// phiên xem trang, tải lại trang là mất — vì web tĩnh không có
+// database). Khách bấm "Đặt hàng qua Zalo/Messenger" thì web tự
+// soạn sẵn nội dung đơn hàng, copy vào bộ nhớ tạm rồi mở khung chat.
+//
+// NHỚ ĐIỀN LINK ZALO/MESSENGER THẬT CỦA SHOP Ở 2 DÒNG DƯỚI, không
+// điền thì nút vẫn copy được đơn hàng nhưng không tự mở khung chat.
+// Link Zalo mẫu: https://zalo.me/0901234567
+// Link Messenger mẫu: https://m.me/tenfanpage
+// ============================================================
+const ZALO_LINK = '';
+const MESSENGER_LINK = '';
+
+let cart=[];
+function formatPrice(n){ return n.toLocaleString('vi-VN')+'đ'; }
+
+function addToCart(p){
+  const priceNum = parseInt(String(p.price).replace(/[^\d]/g,''),10)||0;
+  const found = cart.find(it=>it.slug===p.slug);
+  if(found) found.qty++;
+  else cart.push({slug:p.slug, name:p.name, priceNum, qty:1});
+  renderCart();
+}
+function changeQty(i,d){
+  cart[i].qty += d;
+  if(cart[i].qty<=0) cart.splice(i,1);
+  renderCart();
+}
+function removeFromCart(i){ cart.splice(i,1); renderCart(); }
+
+function renderCart(){
+  document.getElementById('cartCount').textContent = cart.reduce((s,it)=>s+it.qty,0);
+  const wrap = document.getElementById('cartItems');
+  wrap.innerHTML = cart.length===0 ? '<div class="empty">Giỏ hàng đang trống.</div>' : cart.map((it,i)=>`
+    <div class="cart-item">
+      <div class="ci-name">${it.name}</div>
+      <div class="ci-row">
+        <div class="qty"><button onclick="changeQty(${i},-1)">−</button><span>${it.qty}</span><button onclick="changeQty(${i},1)">+</button></div>
+        <div class="ci-price">${formatPrice(it.priceNum*it.qty)}</div>
+        <button class="ci-remove" onclick="removeFromCart(${i})">✕</button>
+      </div>
+    </div>`).join('');
+  document.getElementById('cartSubtotal').textContent = formatPrice(cart.reduce((s,it)=>s+it.priceNum*it.qty,0));
+}
+
+const cartDrawer=document.getElementById('cartDrawer'), cartOverlay=document.getElementById('cartOverlay');
+function openCart(){ cartDrawer.classList.add('open'); cartOverlay.classList.add('open'); }
+function closeCart(){ cartDrawer.classList.remove('open'); cartOverlay.classList.remove('open'); }
+document.getElementById('cartOpenBtn').addEventListener('click', e=>{ e.preventDefault(); openCart(); });
+document.getElementById('cartCloseBtn').addEventListener('click', closeCart);
+cartOverlay.addEventListener('click', closeCart);
+
+function buildOrderText(){
+  const lines = cart.map(it=>`- ${it.name} x${it.qty}: ${formatPrice(it.priceNum*it.qty)}`);
+  const total = cart.reduce((s,it)=>s+it.priceNum*it.qty,0);
+  return `ĐƠN HÀNG MIUMEOSHOP\n${lines.join('\n')}\nTổng cộng: ${formatPrice(total)}\n\nTên: \nSĐT: \nĐịa chỉ: `;
+}
+function checkoutVia(channel){
+  if(cart.length===0){ alert('Giỏ hàng đang trống, chọn sản phẩm trước nhé!'); return; }
+  const text = buildOrderText();
+  const link = channel==='zalo' ? ZALO_LINK : MESSENGER_LINK;
+  navigator.clipboard?.writeText(text).catch(()=>{});
+  if(link){ alert('Đã copy nội dung đơn hàng — dán vào khung chat khi cửa sổ mới mở ra nhé!'); window.open(link,'_blank'); }
+  else{ alert('Đã copy nội dung đơn hàng vào bộ nhớ tạm.\nShop chưa gắn link Zalo/Messenger — mở comment đầu <script>, điền vào ZALO_LINK / MESSENGER_LINK.'); }
+}
 function goSearch(){document.getElementById('products').scrollIntoView({behavior:'smooth'})}
 document.getElementById('search').addEventListener('input',e=>{let q=e.target.value.toLowerCase().trim();document.querySelectorAll('.card').forEach(c=>c.style.display=!q||c.dataset.name.includes(q)?'':'none')});
 
+// Lọc sản phẩm theo danh mục khi bấm các nút pill (Áo nam/Áo nữ/Quần/Váy/Phụ kiện)
+document.querySelectorAll('.pill').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.pill').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const cat=btn.dataset.cat;
+    document.getElementById('search').value='';
+    document.querySelectorAll('.card').forEach(c=>c.style.display=(cat==='all'||c.dataset.cat===cat)?'':'none');
+  });
+});
+
 // Nhạc nền — file đang dùng: nhac_nen.mp3 (đặt ngay gốc repo, cạnh index.html)
-// Music: browser may block autoplay; first user touch starts it.
+// Trình duyệt KHÔNG cho phát có tiếng ngay khi vào trang nếu chưa có
+// thao tác chạm nào — đây là luật chung của mọi trình duyệt, không phải
+// lỗi code. Cách lách hợp lệ: phát nhạc câm tiếng ngay lập tức (được phép),
+// rồi mở tiếng thật ở cái chạm đầu tiên của khách — nên nhạc coi như phát
+// "ngay khi vào web" nhưng có 1 chạm rất nhẹ đầu tiên mới nghe được tiếng.
 const audio=document.getElementById('audio'), box=document.getElementById('musicBox'), mb=document.getElementById('musicBtn');
-async function playMusic(){try{await audio.play();box.classList.add('playing');mb.textContent='Ⅱ'}catch(e){}}
-mb.onclick=()=>audio.paused?playMusic():(audio.pause(),box.classList.remove('playing'),mb.textContent='▶');
-['click','touchstart','pointerdown'].forEach(ev=>document.addEventListener(ev,()=>{if(audio.paused)playMusic()},{once:true,passive:true}));
+audio.muted=true;
+audio.play().then(()=>{box.classList.add('playing');mb.textContent='Ⅱ'}).catch(()=>{});
+function unmuteMusic(){
+  if(audio.muted)audio.muted=false;
+  if(audio.paused)audio.play().catch(()=>{});
+  box.classList.add('playing');mb.textContent='Ⅱ';
+}
+mb.onclick=()=>{
+  if(audio.paused||audio.muted)unmuteMusic();
+  else{audio.pause();box.classList.remove('playing');mb.textContent='▶'}
+};
+['click','touchstart','pointerdown'].forEach(ev=>document.addEventListener(ev,unmuteMusic,{once:true,passive:true}));
 
 // Snow effect — nhẹ trên iPhone, dày hơn trên màn hình lớn.
 const c=document.getElementById('snow'),ctx=c.getContext('2d');let flakes=[];
