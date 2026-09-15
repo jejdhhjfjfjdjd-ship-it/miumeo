@@ -6,6 +6,7 @@
 <title>MIUMEOSHOP — Thời trang uy tín</title>
 <link rel="icon" type="image/png" href="images/favicon.png">
 <meta name="theme-color" content="#050711">
+<meta name="description" content="MIUMEOSHOP — shop thời trang phong cách neon, mua sắm nhanh trên iPhone.">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&display=swap');
 :root{--pink:#ff28ad;--hot:#ff54c7;--violet:#7b35ff;--cyan:#00dcff;--bg:#030611;--panel:#080f21;--line:rgba(255,255,255,.12);--muted:#8995ad}
@@ -74,6 +75,103 @@ body{background:#03050b} .header{position:sticky;top:0;z-index:70;backdrop-filte
 .trust div{transition:.22s}.trust div:hover{background:rgba(255,36,178,.035)}.trust div:hover .ico{transform:translateY(-3px) scale(1.05);box-shadow:0 0 25px rgba(255,28,173,.5)}.ico{transition:.22s}
 .music{transition:.25s}.music:hover{transform:translateY(-2px);box-shadow:0 0 35px rgba(226,34,171,.35)}
 @media(max-width:700px){.music{bottom:8px}}
+
+/* ===================== MIUMEOSHOP V2 POLISH ===================== */
+:root{
+  --glass:rgba(7,12,28,.72);
+  --glass2:rgba(13,20,42,.78);
+  --pink2:#ff76d5;
+  --shadow:0 18px 60px rgba(0,0,0,.35);
+}
+::selection{background:rgba(255,40,173,.35);color:#fff}
+button,a,input{ -webkit-tap-highlight-color:transparent }
+button{font-family:inherit;cursor:pointer}
+body{min-height:100vh}
+body.no-scroll{overflow:hidden}
+header{isolation:isolate}
+.head{position:relative}
+.brand-logo{transition:transform .28s ease,filter .28s ease}
+.brand:hover .brand-logo{transform:translateY(-1px) scale(1.035)}
+.search input::placeholder{color:#68758e}
+.search button{cursor:pointer;transition:.22s}
+.search button:hover{filter:brightness(1.12)}
+.actions .act{transition:.2s}
+.actions .act:hover{transform:translateY(-2px);color:#fff}
+.nav::-webkit-scrollbar,.filters::-webkit-scrollbar{height:0}
+.nav a,.pill,.btn,.add,.heart,.see{user-select:none}
+.hero{min-height:430px}
+.hero-inner{min-height:430px}
+.hero-copy{animation:heroRise .8s cubic-bezier(.2,.8,.2,1) both}
+@keyframes heroRise{from{opacity:0;transform:translateY(22px) scale(.985)}to{opacity:1;transform:none}}
+.hero-logo{transition:transform .5s ease,filter .5s ease}
+.hero-logo:hover{transform:scale(1.012);filter:drop-shadow(0 0 28px rgba(255,40,173,.34))}
+.section{scroll-margin-top:155px}
+.product-tools{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:2px 0 16px;flex-wrap:wrap}
+.result-count{font-size:10px;color:#75829b}
+.sort-select{appearance:none;background:#071024;color:#cbd5e8;border:1px solid rgba(255,255,255,.12);border-radius:999px;padding:8px 32px 8px 12px;font:800 10px inherit;outline:0}
+.sort-select:focus{border-color:rgba(255,40,173,.6);box-shadow:0 0 0 3px rgba(255,40,173,.08)}
+.grid .card{cursor:pointer;will-change:transform}
+.card .heart{z-index:4;cursor:pointer;transition:.2s}
+.card .heart:hover{transform:scale(1.08);border-color:rgba(255,40,173,.7);box-shadow:0 0 16px rgba(255,40,173,.28)}
+.card .heart.fav{background:linear-gradient(135deg,var(--pink),var(--violet));border-color:transparent}
+.card .add{position:relative;z-index:5}
+.card .photo:after{content:"Xem nhanh";position:absolute;left:50%;bottom:12px;transform:translate(-50%,8px);padding:7px 12px;border-radius:999px;background:rgba(2,5,12,.78);border:1px solid rgba(255,255,255,.15);backdrop-filter:blur(10px);font-size:9px;font-weight:900;opacity:0;transition:.25s;pointer-events:none}
+.card:hover .photo:after{opacity:1;transform:translate(-50%,0)}
+.toast{
+  position:fixed;left:50%;bottom:22px;transform:translate(-50%,18px);
+  z-index:500;opacity:0;pointer-events:none;
+  padding:11px 16px;border:1px solid rgba(255,255,255,.14);
+  border-radius:999px;background:rgba(5,9,20,.92);backdrop-filter:blur(18px);
+  box-shadow:0 12px 35px rgba(0,0,0,.35),0 0 25px rgba(255,40,173,.16);
+  font-size:11px;font-weight:800;white-space:nowrap;transition:.25s;
+}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.quick-overlay{
+  position:fixed;inset:0;background:rgba(1,3,9,.72);backdrop-filter:blur(12px);
+  z-index:450;opacity:0;pointer-events:none;transition:.25s;padding:20px;
+  display:grid;place-items:center;
+}
+.quick-overlay.open{opacity:1;pointer-events:auto}
+.quick-modal{
+  width:min(860px,100%);max-height:min(720px,92vh);overflow:auto;
+  background:linear-gradient(145deg,#0a1228,#050914);
+  border:1px solid rgba(255,40,173,.28);border-radius:24px;
+  box-shadow:0 30px 100px rgba(0,0,0,.58),0 0 55px rgba(255,40,173,.10);
+  display:grid;grid-template-columns:minmax(280px, .9fr) 1fr;position:relative;
+}
+.quick-media{min-height:430px;background:#080d1b;overflow:hidden;border-radius:23px 0 0 23px}
+.quick-media img{width:100%;height:100%;min-height:430px;object-fit:cover;display:block}
+.quick-body{padding:34px}
+.quick-kicker{color:#ff58bf;font-size:10px;font-weight:900;letter-spacing:1px}
+.quick-title{font-size:28px;line-height:1.2;margin:8px 0 12px}
+.quick-price{font-size:25px;font-weight:900}
+.quick-old{font-size:11px;color:#6f7b92;text-decoration:line-through;margin-left:7px}
+.quick-desc{color:#8996ae;font-size:12px;line-height:1.8;margin:18px 0}
+.quick-meta{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:18px 0}
+.quick-meta div{padding:11px;border:1px solid rgba(255,255,255,.09);border-radius:12px;background:#071024}
+.quick-meta b{display:block;font-size:9px;color:#6e7b94;margin-bottom:3px}
+.quick-meta span{font-size:11px;font-weight:800}
+.quick-close{position:absolute;right:12px;top:12px;width:36px;height:36px;border-radius:50%;border:1px solid rgba(255,255,255,.16);background:rgba(2,5,12,.75);color:#fff;font-size:16px;z-index:2}
+.quick-actions{display:flex;gap:8px;flex-wrap:wrap}
+.quick-actions .btn{cursor:pointer}
+.favorite-note{font-size:9px;color:#68758c;margin-top:12px}
+footer{position:relative;z-index:2}
+@media(max-width:720px){
+  .hero,.hero-inner{min-height:350px}
+  .product-tools{align-items:flex-start}
+  .quick-overlay{padding:10px}
+  .quick-modal{grid-template-columns:1fr;max-height:94vh}
+  .quick-media{min-height:280px;height:42vh;max-height:380px;border-radius:23px 23px 0 0}
+  .quick-media img{min-height:280px;height:100%}
+  .quick-body{padding:22px}
+  .quick-title{font-size:22px}
+  .quick-price{font-size:21px}
+  .card .photo:after{display:none}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*:before,*:after{scroll-behavior:auto!important;animation:none!important;transition:none!important}
+}
+
 </style>
 </head>
 <body>
@@ -124,6 +222,16 @@ body{background:#03050b} .header{position:sticky;top:0;z-index:70;backdrop-filte
 <section class="section" id="products"><div class="container">
   <div class="section-head"><div><div class="kicker">🔥 HOT COLLECTION</div><div class="title">SẢN PHẨM NỔI BẬT</div><div class="sub">Những item được yêu thích nhất tại miumeoshop</div></div><a class="see" href="#">Xem tất cả →</a></div>
   <div class="filters"><button class="pill active" data-cat="all">Tất cả</button><button class="pill" data-cat="nam">Áo nam</button><button class="pill" data-cat="nu">Áo nữ</button><button class="pill" data-cat="quan">Quần</button><button class="pill" data-cat="vay">Váy</button><button class="pill" data-cat="phukien">Phụ kiện</button></div>
+  <div class="product-tools">
+    <span class="result-count" id="resultCount">Đang hiển thị sản phẩm</span>
+    <select class="sort-select" id="sortSelect" aria-label="Sắp xếp sản phẩm">
+      <option value="default">Sắp xếp: nổi bật</option>
+      <option value="price-asc">Giá thấp → cao</option>
+      <option value="price-desc">Giá cao → thấp</option>
+      <option value="sold-desc">Bán chạy nhất</option>
+      <option value="name">Tên A → Z</option>
+    </select>
+  </div>
   <div class="grid" id="grid"></div>
 </div></section>
 
@@ -152,6 +260,31 @@ body{background:#03050b} .header{position:sticky;top:0;z-index:70;backdrop-filte
   </div>
 </aside>
 
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<div class="quick-overlay" id="quickOverlay" aria-hidden="true">
+  <div class="quick-modal" role="dialog" aria-modal="true" aria-label="Xem nhanh sản phẩm">
+    <button class="quick-close" id="quickClose" aria-label="Đóng">✕</button>
+    <div class="quick-media"><img id="quickImg" alt=""></div>
+    <div class="quick-body">
+      <div class="quick-kicker">MIUMEOSHOP • QUICK VIEW</div>
+      <h2 class="quick-title" id="quickTitle">Sản phẩm</h2>
+      <div><span class="quick-price" id="quickPrice">0đ</span><span class="quick-old" id="quickOld"></span></div>
+      <p class="quick-desc">Một item nổi bật cho outfit hằng ngày. Bạn có thể thêm sản phẩm vào giỏ ngay từ cửa sổ xem nhanh.</p>
+      <div class="quick-meta">
+        <div><b>DANH MỤC</b><span id="quickCat">—</span></div>
+        <div><b>ĐÃ BÁN</b><span id="quickSold">—</span></div>
+      </div>
+      <div class="quick-actions">
+        <button class="btn primary" id="quickAdd">🛒 Thêm vào giỏ</button>
+        <button class="btn ghost" id="quickFav">♡ Yêu thích</button>
+      </div>
+      <div class="favorite-note">♡ Yêu thích được lưu trên thiết bị này.</div>
+    </div>
+  </div>
+</div>
+
 <footer><div class="container foot">
   <!-- Thay 4 href="#" trong .social-row bằng link Facebook/Instagram/TikTok/Messenger thật của shop -->
   <div><img src="images/logo.png" alt="MIUMEOSHOP" style="height:44px;width:auto;margin-bottom:10px"><p>Website mua bán quần áo uy tín.<br>Phong cách neon hồng — xanh dành riêng cho miumeoshop.</p></div>
@@ -172,6 +305,7 @@ body{background:#03050b} .header{position:sticky;top:0;z-index:70;backdrop-filte
 //            mất tác dụng nổi bật)
 //   sold   : số lượt "Đã bán" hiển thị trên thẻ sản phẩm
 // ============================================================
+// BOT_PRODUCTS_START
 const products=[
  {slug:'ao-thun-basic',   name:'Áo thun basic form rộng',      price:'149.000đ', oldPrice:'189.000đ', cat:'nam', hot:true,  sold:210},
  {slug:'hoodie-graffiti', name:'Hoodie Graffiti Hot Trend',    price:'299.000đ', oldPrice:'359.000đ', cat:'nam', hot:true,  sold:186},
@@ -195,6 +329,7 @@ const products=[
  {slug:'ao-khoac-denim-dinh-huy-hieu', name:'Áo khoác denim đính huy hiệu', price:'389.000đ', oldPrice:'459.000đ', cat:'nam', hot:false, sold:47},
  {slug:'ao-khoac-bomber-phoi-soc-be', name:'Áo khoác bomber phối sọc - Be', price:'419.000đ', oldPrice:'489.000đ', cat:'nam', hot:true,  sold:73},
  {slug:'ao-khoac-bomber-phoi-soc-den', name:'Áo khoác bomber phối sọc - Đen', price:'419.000đ', oldPrice:'489.000đ', cat:'nam', hot:false, sold:52},
+// BOT_PRODUCTS_END
 ];
 const grid=document.getElementById('grid');
 function findImage(slug,img){
@@ -318,4 +453,169 @@ function resize(){c.width=innerWidth*devicePixelRatio;c.height=innerHeight*devic
 function snow(){ctx.clearRect(0,0,innerWidth,innerHeight);for(const f of flakes){f.y+=f.s;f.x+=Math.sin(f.t+=.012)*.25+f.w*.12;if(f.y>innerHeight+8){f.y=-8;f.x=Math.random()*innerWidth}if(f.x<-8)f.x=innerWidth+8;if(f.x>innerWidth+8)f.x=-8;ctx.beginPath();ctx.fillStyle=`rgba(255,255,255,${f.o})`;ctx.shadowBlur=7;ctx.shadowColor='rgba(255,130,220,.8)';ctx.arc(f.x,f.y,f.r,0,Math.PI*2);ctx.fill()}requestAnimationFrame(snow)}
 addEventListener('resize',resize);resize();snow();
 </script>
+
+<script>
+/* ===================== MIUMEOSHOP V2 INTERACTIONS ===================== */
+(()=>{
+  const $ = s => document.querySelector(s);
+  const $$ = s => [...document.querySelectorAll(s)];
+  const safeParse = (s, fallback)=>{try{return JSON.parse(s)}catch{return fallback}};
+  const favKey='miumeoshop_favorites_v2', cartKey='miumeoshop_cart_v2';
+  let favorites = new Set(safeParse(localStorage.getItem(favKey)||'[]',[]));
+  const toastEl=$('#toast');
+  let toastTimer;
+  function toast(msg){
+    if(!toastEl) return;
+    toastEl.textContent=msg; toastEl.classList.add('show');
+    clearTimeout(toastTimer); toastTimer=setTimeout(()=>toastEl.classList.remove('show'),1800);
+  }
+  function saveFav(){localStorage.setItem(favKey,JSON.stringify([...favorites]));}
+  function parseMoney(v){return Number(String(v||'').replace(/[^\d]/g,''))||0}
+  function catLabel(cat){return ({nam:'Áo nam',nu:'Áo nữ',quan:'Quần',vay:'Váy',phukien:'Phụ kiện'})[cat]||cat}
+  function syncFavButtons(){
+    $$('.card').forEach(card=>{
+      const slug=card.dataset.slug;
+      const b=card.querySelector('.heart');
+      if(!b||!slug) return;
+      const yes=favorites.has(slug);
+      b.classList.toggle('fav',yes);
+      b.textContent=yes?'♥':'♡';
+      b.setAttribute('aria-label',yes?'Bỏ yêu thích':'Thêm yêu thích');
+    });
+  }
+
+  // Enhance generated cards with accessibility/data attributes.
+  products.forEach((p,i)=>{
+    const cards=$$('.card');
+    const card=cards[i];
+    if(!card) return;
+    card.dataset.slug=p.slug;
+    card.setAttribute('tabindex','0');
+    card.setAttribute('role','article');
+    const h=card.querySelector('.heart');
+    if(h){h.setAttribute('aria-label','Thêm yêu thích');}
+    card.addEventListener('click',e=>{
+      if(e.target.closest('button')) return;
+      openQuick(p);
+    });
+    card.addEventListener('keydown',e=>{
+      if((e.key==='Enter'||e.key===' ')&&!e.target.closest('button')){e.preventDefault();openQuick(p)}
+    });
+    h?.addEventListener('click',e=>{
+      e.preventDefault();e.stopPropagation();
+      if(favorites.has(p.slug)){favorites.delete(p.slug);toast('Đã bỏ khỏi yêu thích')}
+      else{favorites.add(p.slug);toast('♡ Đã thêm vào yêu thích')}
+      saveFav();syncFavButtons();
+    });
+  });
+
+  // Replace the simple search behavior with a count + sort aware renderer.
+  const searchEl=$('#search'), countEl=$('#resultCount'), sortEl=$('#sortSelect');
+  let activeCat='all', query='';
+  function visibleProducts(){
+    let arr=products.filter(p=>(activeCat==='all'||p.cat===activeCat)&&(!query||p.name.toLowerCase().includes(query)));
+    const mode=sortEl?.value||'default';
+    arr=[...arr];
+    if(mode==='price-asc') arr.sort((a,b)=>parseMoney(a.price)-parseMoney(b.price));
+    if(mode==='price-desc') arr.sort((a,b)=>parseMoney(b.price)-parseMoney(a.price));
+    if(mode==='sold-desc') arr.sort((a,b)=>(b.sold||0)-(a.sold||0));
+    if(mode==='name') arr.sort((a,b)=>a.name.localeCompare(b.name,'vi'));
+    return arr;
+  }
+  function applyView(){
+    const arr=visibleProducts(), allowed=new Set(arr.map(p=>p.slug));
+    $$('.card').forEach(c=>c.style.display=allowed.has(c.dataset.slug)?'':'none');
+    if(countEl) countEl.textContent=`Hiển thị ${arr.length}/${products.length} sản phẩm`;
+    syncFavButtons();
+  }
+  if(searchEl){
+    searchEl.addEventListener('input',e=>{query=e.target.value.toLowerCase().trim();applyView()});
+  }
+  $$('.pill').forEach(btn=>{
+    btn.addEventListener('click',()=>{activeCat=btn.dataset.cat||'all';setTimeout(applyView,0)});
+  });
+  sortEl?.addEventListener('change',applyView);
+
+  // The original script already changes pill classes; this keeps state in sync.
+  $$('.pill').forEach(btn=>btn.addEventListener('click',()=>{activeCat=btn.dataset.cat||'all'}));
+
+  // Favorites shortcut in header.
+  const favLink=$$('.act').find(a=>(a.textContent||'').includes('Yêu thích'));
+  favLink?.addEventListener('click',e=>{
+    e.preventDefault();
+    if(favorites.size===0){toast('Bạn chưa có sản phẩm yêu thích');return}
+    activeCat='all';query='';
+    if(searchEl) searchEl.value='';
+    $$('.pill').forEach(x=>x.classList.toggle('active',x.dataset.cat==='all'));
+    $$('.card').forEach(c=>c.style.display=favorites.has(c.dataset.slug)?'':'none');
+    if(countEl) countEl.textContent=`Đang xem ${favorites.size} sản phẩm yêu thích`;
+    document.getElementById('products')?.scrollIntoView({behavior:'smooth',block:'start'});
+  });
+
+  // Persistent cart: load after original cart is created.
+  const savedCart=safeParse(localStorage.getItem(cartKey)||'[]',[]);
+  if(Array.isArray(savedCart)&&savedCart.length){
+    cart.splice(0,cart.length,...savedCart.filter(x=>x&&x.slug).map(x=>({...x,qty:Math.max(1,Number(x.qty)||1)})));
+    renderCart();
+  }
+  const originalRenderCart=window.renderCart;
+  window.renderCart=function(){
+    originalRenderCart?.();
+    try{localStorage.setItem(cartKey,JSON.stringify(cart))}catch{}
+  };
+  // Initial renderCart call happened before wrapper, so persist once now.
+  try{localStorage.setItem(cartKey,JSON.stringify(cart))}catch{}
+
+  // Toast when add-to-cart is clicked.
+  $$('.add').forEach(b=>b.addEventListener('click',()=>toast('🛒 Đã thêm sản phẩm vào giỏ')));
+
+  // Quick view modal.
+  const overlay=$('#quickOverlay'), qImg=$('#quickImg'), qTitle=$('#quickTitle'), qPrice=$('#quickPrice'),
+        qOld=$('#quickOld'), qCat=$('#quickCat'), qSold=$('#quickSold'), qAdd=$('#quickAdd'), qFav=$('#quickFav');
+  let quickProduct=null;
+  function setQuickFav(){
+    if(!quickProduct||!qFav) return;
+    const yes=favorites.has(quickProduct.slug);
+    qFav.textContent=yes?'♥ Đã yêu thích':'♡ Yêu thích';
+  }
+  function openQuick(p){
+    quickProduct=p;
+    qTitle.textContent=p.name;
+    qPrice.textContent=p.price;
+    qOld.textContent=p.oldPrice||'';
+    qCat.textContent=catLabel(p.cat);
+    qSold.textContent=(p.sold||0)+'+';
+    qImg.alt=p.name; qImg.removeAttribute('src');
+    findImage(p.slug,qImg);
+    setQuickFav();
+    overlay?.classList.add('open'); overlay?.setAttribute('aria-hidden','false');
+    document.body.classList.add('no-scroll');
+  }
+  function closeQuick(){
+    overlay?.classList.remove('open'); overlay?.setAttribute('aria-hidden','true');
+    document.body.classList.remove('no-scroll'); quickProduct=null;
+  }
+  $('#quickClose')?.addEventListener('click',closeQuick);
+  overlay?.addEventListener('click',e=>{if(e.target===overlay)closeQuick()});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&overlay?.classList.contains('open'))closeQuick()});
+  qAdd?.addEventListener('click',()=>{
+    if(!quickProduct)return;
+    addToCart(quickProduct);toast('🛒 Đã thêm vào giỏ');closeQuick();
+  });
+  qFav?.addEventListener('click',()=>{
+    if(!quickProduct)return;
+    if(favorites.has(quickProduct.slug))favorites.delete(quickProduct.slug);else favorites.add(quickProduct.slug);
+    saveFav();syncFavButtons();setQuickFav();toast(favorites.has(quickProduct.slug)?'♡ Đã thêm yêu thích':'Đã bỏ khỏi yêu thích');
+  });
+
+  // Improve cart open/close with ESC.
+  document.addEventListener('keydown',e=>{
+    if(e.key==='Escape'){try{closeCart()}catch{}}
+  });
+
+  // Initial state.
+  syncFavButtons(); applyView();
+})();
+</script>
+
 </body></html>

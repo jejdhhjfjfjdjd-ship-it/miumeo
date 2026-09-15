@@ -1,0 +1,191 @@
+[
+  {
+    "slug": "ao-thun-basic",
+    "name": "Áo thun basic form rộng",
+    "price": "149.000đ",
+    "oldPrice": "189.000đ",
+    "cat": "nam",
+    "hot": true,
+    "sold": 210
+  },
+  {
+    "slug": "hoodie-graffiti",
+    "name": "Hoodie Graffiti Hot Trend",
+    "price": "299.000đ",
+    "oldPrice": "359.000đ",
+    "cat": "nam",
+    "hot": true,
+    "sold": 186
+  },
+  {
+    "slug": "ao-khoac-den",
+    "name": "Áo khoác phối đen cá tính",
+    "price": "329.000đ",
+    "oldPrice": "399.000đ",
+    "cat": "nam",
+    "hot": false,
+    "sold": 94
+  },
+  {
+    "slug": "sweater-acne",
+    "name": "Sweater basic premium",
+    "price": "259.000đ",
+    "oldPrice": "319.000đ",
+    "cat": "nu",
+    "hot": false,
+    "sold": 132
+  },
+  {
+    "slug": "ao-khoac-den-2",
+    "name": "Áo khoác streetwear",
+    "price": "349.000đ",
+    "oldPrice": "429.000đ",
+    "cat": "nam",
+    "hot": false,
+    "sold": 77
+  },
+  {
+    "slug": "quan-jogger",
+    "name": "Quần jogger form rộng",
+    "price": "239.000đ",
+    "oldPrice": "289.000đ",
+    "cat": "quan",
+    "hot": true,
+    "sold": 158
+  },
+  {
+    "slug": "ao-nu-crop",
+    "name": "Áo nữ crop top trendy",
+    "price": "159.000đ",
+    "oldPrice": "199.000đ",
+    "cat": "nu",
+    "hot": true,
+    "sold": 203
+  },
+  {
+    "slug": "vay-den",
+    "name": "Váy đen phong cách",
+    "price": "279.000đ",
+    "oldPrice": "339.000đ",
+    "cat": "vay",
+    "hot": false,
+    "sold": 68
+  },
+  {
+    "slug": "tui-mini",
+    "name": "Túi mini phối outfit",
+    "price": "199.000đ",
+    "oldPrice": "249.000đ",
+    "cat": "phukien",
+    "hot": false,
+    "sold": 121
+  },
+  {
+    "slug": "mu-bucket",
+    "name": "Mũ bucket thời trang",
+    "price": "119.000đ",
+    "oldPrice": "159.000đ",
+    "cat": "phukien",
+    "hot": false,
+    "sold": 145
+  },
+  {
+    "slug": "quan-jean-ong-rong",
+    "name": "Quần jean ống rộng",
+    "price": "329.000đ",
+    "oldPrice": "389.000đ",
+    "cat": "quan",
+    "hot": false,
+    "sold": 59
+  },
+  {
+    "slug": "ao-so-mi-oversize",
+    "name": "Áo sơ mi oversize basic",
+    "price": "219.000đ",
+    "oldPrice": "269.000đ",
+    "cat": "nam",
+    "hot": false,
+    "sold": 88
+  },
+  {
+    "slug": "vay-hoa-mini",
+    "name": "Váy hoa mini xinh xắn",
+    "price": "249.000đ",
+    "oldPrice": "299.000đ",
+    "cat": "vay",
+    "hot": true,
+    "sold": 167
+  },
+  {
+    "slug": "ao-len-basic",
+    "name": "Áo len basic cổ tròn",
+    "price": "229.000đ",
+    "oldPrice": "279.000đ",
+    "cat": "nu",
+    "hot": false,
+    "sold": 103
+  },
+  {
+    "slug": "that-lung-da",
+    "name": "Thắt lưng da phối khoá",
+    "price": "99.000đ",
+    "oldPrice": "139.000đ",
+    "cat": "phukien",
+    "hot": false,
+    "sold": 74
+  },
+  {
+    "slug": "quan-short-the-thao",
+    "name": "Quần short thể thao",
+    "price": "139.000đ",
+    "oldPrice": "179.000đ",
+    "cat": "quan",
+    "hot": false,
+    "sold": 112
+  },
+  {
+    "slug": "hoodie-phoi-chu-den",
+    "name": "Hoodie phối chữ form rộng - Đen",
+    "price": "329.000đ",
+    "oldPrice": "399.000đ",
+    "cat": "nam",
+    "hot": true,
+    "sold": 96
+  },
+  {
+    "slug": "hoodie-phoi-chu-xam",
+    "name": "Hoodie phối chữ form rộng - Xám",
+    "price": "329.000đ",
+    "oldPrice": "399.000đ",
+    "cat": "nam",
+    "hot": false,
+    "sold": 61
+  },
+  {
+    "slug": "ao-khoac-denim-dinh-huy-hieu",
+    "name": "Áo khoác denim đính huy hiệu",
+    "price": "389.000đ",
+    "oldPrice": "459.000đ",
+    "cat": "nam",
+    "hot": false,
+    "sold": 47
+  },
+  {
+    "slug": "ao-khoac-bomber-phoi-soc-be",
+    "name": "Áo khoác bomber phối sọc - Be",
+    "price": "419.000đ",
+    "oldPrice": "489.000đ",
+    "cat": "nam",
+    "hot": true,
+    "sold": 73
+  },
+  {
+    "slug": "ao-khoac-bomber-phoi-soc-den",
+    "name": "Áo khoác bomber phối sọc - Đen",
+    "price": "419.000đ",
+    "oldPrice": "489.000đ",
+    "cat": "nam",
+    "hot": false,
+    "sold": 52
+  }
+]
