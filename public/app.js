@@ -58,6 +58,7 @@ $('logoutBtn').addEventListener('click', () => {
   state.cart = {};
   $('shopScreen').hidden = true;
   $('loginScreen').hidden = false;
+  $('cartOverlay').hidden = true;
 });
 
 // ---------- SHOP ----------
