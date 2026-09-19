@@ -246,6 +246,13 @@ h1, h2, .brand-font { font-family: 'Baloo 2', sans-serif; }
 }
 
 /* ---------- CART OVERLAY ---------- */
+/* Quan trọng: thuộc tính hidden phải thật sự ẩn overlay.
+   .overlay { display:flex } nếu không có rule này sẽ ghi đè
+   display:none mặc định của HTML và che màn hình đăng nhập. */
+.overlay[hidden] {
+  display: none !important;
+}
+
 .overlay {
   position: fixed;
   inset: 0;

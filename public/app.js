@@ -206,6 +206,17 @@ $('submitOrderBtn').addEventListener('click', async () => {
 
 // ---------- INIT ----------
 
+// Luôn đóng giỏ khi trang vừa mở. Điều này tránh giỏ hàng che màn hình đăng nhập.
+$('cartOverlay').hidden = true;
+
 if (state.code) {
-  enterShop().catch(() => {});
+  enterShop().catch(() => {
+    // Nếu mã lưu trong máy không còn hợp lệ thì quay về màn hình đăng nhập.
+    localStorage.removeItem('ctv_code');
+    localStorage.removeItem('ctv_name');
+    state.code = '';
+    state.name = '';
+    $('shopScreen').hidden = true;
+    $('loginScreen').hidden = false;
+  });
 }
