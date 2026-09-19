@@ -64,6 +64,7 @@ $('logoutBtn').addEventListener('click', () => {
 // ---------- SHOP ----------
 
 async function enterShop() {
+  $('cartOverlay').hidden = true;
   $('loginScreen').hidden = true;
   $('shopScreen').hidden = false;
   $('ctvName').textContent = state.name;
