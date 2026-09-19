@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Miumeoshop — Báo giá CTV</title>
+<link rel="icon" href="assets/logo.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- MÀN HÌNH ĐĂNG NHẬP -->
+<section id="loginScreen" class="screen login-screen">
+  <div class="login-card">
+    <img src="assets/logo.png" alt="Miumeoshop" class="login-logo" />
+    <h1>Bảng giá CTV</h1>
+    <p class="login-sub">Nhập mã cộng tác viên để xem bảng giá</p>
+    <form id="loginForm" autocomplete="off">
+      <input id="codeInput" type="text" placeholder="Mã CTV của bạn" maxlength="12" />
+      <button type="submit">Vào xem giá</button>
+    </form>
+    <p id="loginError" class="login-error" hidden></p>
+  </div>
+</section>
+
+<!-- MÀN HÌNH SẢN PHẨM -->
+<section id="shopScreen" class="screen shop-screen" hidden>
+  <header class="topbar">
+    <img src="assets/logo.png" alt="Miumeoshop" class="topbar-logo" />
+    <div class="topbar-text">
+      <strong id="ctvName">CTV</strong>
+      <span>Bảng giá dành riêng cho bạn</span>
+    </div>
+    <button id="logoutBtn" class="ghost-btn">Thoát</button>
+  </header>
+
+  <main id="productGrid" class="product-grid"></main>
+  <p id="emptyState" class="empty-state" hidden>Chưa có sản phẩm nào, quay lại sau nhé 🐾</p>
+
+  <button id="cartBtn" class="cart-fab" hidden>
+    <span id="cartCount">0</span> sản phẩm · <span id="cartTotal">0đ</span> — Xem giỏ
+  </button>
+</section>
+
+<!-- GIỎ HÀNG / ĐẶT HÀNG -->
+<div id="cartOverlay" class="overlay" hidden>
+  <div class="cart-sheet">
+    <div class="cart-header">
+      <h2>Giỏ hàng của bạn</h2>
+      <button id="closeCart" class="icon-btn">✕</button>
+    </div>
+    <div id="cartItems" class="cart-items"></div>
+    <textarea id="orderNote" placeholder="Ghi chú cho shop (không bắt buộc)"></textarea>
+    <div class="cart-footer">
+      <div class="cart-total-row">
+        <span>Tổng cộng</span>
+        <strong id="cartFooterTotal">0đ</strong>
+      </div>
+      <button id="submitOrderBtn">Gửi đơn cho shop</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST XÁC NHẬN -->
+<div id="toast" class="toast" hidden></div>
+
+<script src="app.js"></script>
+</body>
+</html>
