@@ -34,7 +34,7 @@
   <header class="topbar glass">
     <div class="brand"><img src="assets/logo.png" alt="Miumeoshop" /><div><b>miumeoshop</b><small>Bảng giá CTV</small></div></div>
     <div class="ctv-chip"><span class="online-dot"></span><span id="ctvName">CTV</span></div>
-    <button id="logoutBtn" class="icon-ghost" title="Thoát">↪</button>
+    <div class="topbar-actions"><button id="rulesBtn" class="topbar-pill">📜 Quy định</button><button id="logoutBtn" class="icon-ghost" title="Thoát">↪</button></div>
   </header>
 
   <main class="shop-main">
@@ -68,13 +68,51 @@
   <main class="admin-main">
     <section class="admin-hero glass"><div><span class="eyebrow">MASTER CONTROL</span><h2>Quản lý shop ⚡</h2><p>Sửa giá, thêm mẫu và theo dõi thiết bị CTV.</p></div><div class="admin-badge">🔐</div></section>
     <section class="admin-grid">
-      <div class="admin-card glass"><h3>➕ Thêm sản phẩm</h3><input id="aName" placeholder="Tên sản phẩm"><input id="aPrice" type="number" placeholder="Giá CTV"><input id="aImage" placeholder="Link ảnh (tuỳ chọn)"><select id="aCat"><option value="nu">🎀 Đồ nữ</option><option value="nam">🖤 Đồ nam</option><option value="unisex">🤍 Unisex</option></select><button id="aAdd" class="primary-btn">Thêm sản phẩm</button></div>
-      <div class="admin-card glass"><h3>🎬 Khu troll</h3><p>Đặt video TikTok troll của bạn tại <code>/troll.mp4</code>. Video sẽ xuất hiện sau khi CTV đăng nhập.</p><div class="admin-tip">💡 Video nên ngắn, MP4. Trình duyệt có thể tự phát ở chế độ im lặng.</div></div>
+      <div class="admin-card glass add-product-card">
+        <div class="admin-card-title"><div><span class="eyebrow">CATALOG</span><h3>➕ Thêm mẫu mới</h3></div><span class="card-icon">🛍️</span></div>
+        <label class="field-label">Tên sản phẩm<input id="aName" placeholder="Ví dụ: Áo baby tee form rộng"></label>
+        <label class="field-label">Giá CTV<input id="aPrice" type="number" inputmode="numeric" placeholder="129000"></label>
+        <label class="field-label">Danh mục<select id="aCat"><option value="nu">🎀 Đồ nữ</option><option value="nam">🖤 Đồ nam</option><option value="unisex">🤍 Unisex</option></select></label>
+        <div class="upload-box" id="addUploadBox">
+          <input id="aImageFile" type="file" accept="image/*" hidden>
+          <button type="button" id="aChooseImage" class="upload-button"><span>📷</span><b>Chọn ảnh từ thư viện</b><small>iPhone / Android • tự tối ưu ảnh</small></button>
+          <div id="aImagePreview" class="image-preview" hidden><img id="aPreviewImg" alt="Ảnh xem trước"><button type="button" id="aRemoveImage" class="preview-remove">×</button></div>
+        </div>
+        <p class="upload-note">Không cần nhập link ảnh. Ảnh được tối ưu ngay trên máy trước khi lưu.</p>
+        <button id="aAdd" class="primary-btn">✨ Thêm vào kho</button>
+      </div>
+      <div class="admin-card glass feature-card">
+        <div class="admin-card-title"><div><span class="eyebrow">CONTROL CENTER</span><h3>⚡ Công cụ nhanh</h3></div><span class="card-icon">💎</span></div>
+        <div class="quick-grid">
+          <div><b>📸 Ảnh thư viện</b><small>Chọn trực tiếp ảnh trong máy, không cần upload lên nơi khác.</small></div>
+          <div><b>💰 Giá CTV</b><small>Sửa giá từng mẫu ngay trên dashboard.</small></div>
+          <div><b>🏷️ Danh mục</b><small>Đồ nữ, đồ nam và unisex được tách rõ.</small></div>
+          <div><b>🔒 CTV</b><small>Theo dõi thiết bị và mở khóa khi cần.</small></div>
+        </div>
+        <div class="admin-tip">🎬 <b>Khu troll:</b> đặt video TikTok tại <code>/troll.mp4</code>. Video xuất hiện sau khi CTV đăng nhập.</div>
+      </div>
     </section>
-    <section class="admin-card glass"><div class="admin-section-head"><h3>📦 Sản phẩm</h3><button id="aRefreshProducts" class="text-btn">Làm mới</button></div><div id="adminProducts" class="admin-list"></div></section>
+    <section class="admin-card glass catalog-card">
+      <div class="admin-section-head"><div><span class="eyebrow">PRODUCT LIBRARY</span><h3>📦 Kho sản phẩm</h3></div><div class="admin-actions"><div class="admin-search"><span>⌕</span><input id="adminProductSearch" placeholder="Tìm sản phẩm..."></div><button id="aRefreshProducts" class="icon-btn">↻</button></div></div>
+      <div class="catalog-stats"><span id="adminProductCount">0 mẫu</span><span>•</span><span>Ảnh + giá + danh mục</span></div>
+      <div id="adminProducts" class="admin-product-grid"></div>
+    </section>
     <section class="admin-card glass"><div class="admin-section-head"><h3>👥 CTV & thiết bị</h3><button id="aRefreshCtvs" class="text-btn">Làm mới</button></div><div id="adminCtvs" class="admin-list"></div></section>
   </main>
 </section>
+
+<div id="editProductOverlay" class="modal-backdrop" hidden>
+  <div class="edit-product-card glass">
+    <button id="closeEditProduct" class="modal-close">×</button>
+    <span class="eyebrow">EDIT PRODUCT</span><h2>Chỉnh sửa mẫu ✨</h2>
+    <input id="eId" type="hidden">
+    <label class="field-label">Tên sản phẩm<input id="eName" placeholder="Tên sản phẩm"></label>
+    <label class="field-label">Giá CTV<input id="ePrice" type="number" inputmode="numeric"></label>
+    <label class="field-label">Danh mục<select id="eCat"><option value="nu">🎀 Đồ nữ</option><option value="nam">🖤 Đồ nam</option><option value="unisex">🤍 Unisex</option></select></label>
+    <div class="edit-image-area"><div id="eImagePreview" class="image-preview"><img id="ePreviewImg" alt="Ảnh sản phẩm"></div><div><input id="eImageFile" type="file" accept="image/*" hidden><button id="eChooseImage" class="mini-btn" type="button">📷 Đổi ảnh từ thư viện</button><p class="upload-note">Ảnh cũ sẽ được thay bằng ảnh bạn chọn.</p></div></div>
+    <button id="eSave" class="primary-btn">💾 Lưu thay đổi</button>
+  </div>
+</div>
 
 <div id="trollOverlay" class="modal-backdrop" hidden><div class="troll-card glass"><button id="closeTroll" class="modal-close">×</button><span class="eyebrow">MIUMEOSHOP TROLL 😂</span><h2>Khoan... xem cái này đã 😭</h2><video id="trollVideo" controls playsinline muted preload="metadata" src="/troll.mp4"></video><p>Không thích thì đóng lại nhé 😂</p></div></div>
 
@@ -87,6 +125,23 @@
     <p>Chúc bạn bán hàng thuận lợi, khách yêu, chốt đơn thật đều và cùng Miumeoshop phát triển thật lâu nhé ✨</p>
     <button id="welcomeMusicBtn" class="primary-btn">Bắt đầu & bật nhạc ♫</button>
     <button id="welcomeLater" class="text-btn big">Vào xem bảng giá</button>
+  </div>
+</div>
+
+
+<div id="rulesOverlay" class="modal-backdrop" hidden>
+  <div class="rules-card glass">
+    <button id="closeRules" class="modal-close">×</button>
+    <div class="rules-head"><div class="rules-icon">🛍️</div><div><span class="eyebrow">MIUMEOSHOP • QUY ĐỊNH</span><h2>Quy định đặt hàng</h2><p>Vui lòng đọc kỹ trước khi xác nhận đơn.</p></div></div>
+    <div class="rules-scroll">
+      <div class="rule-item"><b>📦 1. Tiền cọc</b><p>Khi đặt hàng tại miumeoshop, khách vui lòng <strong>cọc trước 40% tổng giá trị đơn hàng</strong> để shop tiến hành đặt hàng.</p></div>
+      <div class="rule-item"><b>🛍️ 2. Hàng order & kiểm tra sản phẩm</b><p>Vì là hàng order, khi mua hàng hãy kiểm tra kỹ <strong>size</strong>. Khi hàng về đến shop, shop sẽ kiểm tra chất lượng rồi mới gửi đến tay khách hàng.</p><p>Sau khi hàng đã đến tay khách hàng, shop <strong>không chịu trách nhiệm</strong> đối với trường hợp hàng không vừa do chọn size hoặc các tình trạng không liên quan đến lỗi của sản phẩm; shop <strong>không hoàn/đổi trả</strong> trong các trường hợp này. 💕</p></div>
+      <div class="rule-item"><b>💰 3. Thanh toán phần còn lại</b><p><strong>40% tiền cọc:</strong> xác nhận đơn & tiến hành order.</p><p><strong>60% còn lại:</strong> thanh toán khi hàng về đến shop, trước khi shop gửi hàng cho khách.</p></div>
+      <div class="rule-item warning"><b>⚠️ 4. Kiểm tra thông tin</b><p>Khách vui lòng kiểm tra kỹ <strong>sản phẩm, màu sắc, size và thông tin nhận hàng</strong> trước khi xác nhận đơn.</p></div>
+      <div class="rules-thanks">❤️ Cảm ơn bạn đã tin tưởng và ủng hộ <strong>miumeoshop</strong>!</div>
+    </div>
+    <label class="rules-check"><input id="rulesAgree" type="checkbox"><span>Tôi đã đọc và đồng ý với quy định đặt hàng của miumeoshop.</span></label>
+    <button id="agreeRules" class="primary-btn" disabled>Đã đọc & đồng ý <span>→</span></button>
   </div>
 </div>
 
