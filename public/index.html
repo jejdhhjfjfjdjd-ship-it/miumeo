@@ -2,8 +2,9 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Miumeoshop — Báo giá CTV</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#0b0710" />
+<title>Miumeoshop — Bảng giá CTV</title>
 <link rel="icon" href="assets/logo.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -11,62 +12,80 @@
 <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+<div class="bg-orb orb-a"></div><div class="bg-orb orb-b"></div>
 
-<!-- MÀN HÌNH ĐĂNG NHẬP -->
 <section id="loginScreen" class="screen login-screen">
-  <div class="login-card">
-    <img src="assets/logo.png" alt="Miumeoshop" class="login-logo" />
+  <div class="login-card glass">
+    <div class="logo-ring"><img src="assets/logo.png" alt="Miumeoshop" class="login-logo" /></div>
+    <span class="eyebrow">MIUMEOSHOP • CTV</span>
     <h1>Bảng giá CTV</h1>
-    <p class="login-sub">Nhập mã cộng tác viên để xem bảng giá</p>
+    <p class="login-sub">Nhập mã cộng tác viên để mở kho hàng & giá riêng.</p>
     <form id="loginForm" autocomplete="off">
-      <input id="codeInput" type="text" placeholder="Mã CTV của bạn" maxlength="12" />
-      <button type="submit">Vào xem giá</button>
+      <div class="input-wrap"><span>✦</span><input id="codeInput" type="text" placeholder="Mã CTV của bạn" maxlength="20" autocapitalize="characters" /></div>
+      <button type="submit" class="primary-btn">Vào shop <span>→</span></button>
     </form>
     <p id="loginError" class="login-error" hidden></p>
+    <div class="login-note">🔒 Mỗi CTV dùng một mã riêng</div>
   </div>
 </section>
 
-<!-- MÀN HÌNH SẢN PHẨM -->
 <section id="shopScreen" class="screen shop-screen" hidden>
-  <header class="topbar">
-    <img src="assets/logo.png" alt="Miumeoshop" class="topbar-logo" />
-    <div class="topbar-text">
-      <strong id="ctvName">CTV</strong>
-      <span>Bảng giá dành riêng cho bạn</span>
-    </div>
-    <button id="logoutBtn" class="ghost-btn">Thoát</button>
+  <header class="topbar glass">
+    <div class="brand"><img src="assets/logo.png" alt="Miumeoshop" /><div><b>miumeoshop</b><small>Bảng giá CTV</small></div></div>
+    <div class="ctv-chip"><span class="online-dot"></span><span id="ctvName">CTV</span></div>
+    <button id="logoutBtn" class="icon-ghost" title="Thoát">↪</button>
   </header>
 
-  <main id="productGrid" class="product-grid"></main>
-  <p id="emptyState" class="empty-state" hidden>Chưa có sản phẩm nào, quay lại sau nhé 🐾</p>
+  <main class="shop-main">
+    <section class="hero glass">
+      <div><span class="eyebrow">WELCOME CTV ✨</span><h2>Chọn đồ • Chọn giá • Gửi đơn</h2><p>Giá CTV được cập nhật trực tiếp. Chúc bạn chốt đơn thật đều 💗</p></div>
+      <div class="hero-badge">🎀<br><b>CTV</b></div>
+    </section>
 
-  <button id="cartBtn" class="cart-fab" hidden>
-    <span id="cartCount">0</span> sản phẩm · <span id="cartTotal">0đ</span> — Xem giỏ
-  </button>
+    <div class="toolbar">
+      <div class="search-box"><span>⌕</span><input id="searchInput" placeholder="Tìm tên sản phẩm..." /></div>
+      <button id="musicBtn" class="round-btn" title="Bật/tắt nhạc">♫</button>
+    </div>
+
+    <nav id="categoryTabs" class="category-tabs" aria-label="Danh mục">
+      <button class="cat active" data-cat="all">✨ Tất cả</button>
+      <button class="cat" data-cat="nu">🎀 Đồ nữ</button>
+      <button class="cat" data-cat="nam">🖤 Đồ nam</button>
+      <button class="cat" data-cat="unisex">🤍 Unisex</button>
+    </nav>
+
+    <div class="result-line"><span id="resultCount">0 sản phẩm</span><button id="clearFilter" class="text-btn" hidden>Xoá tìm kiếm</button></div>
+    <main id="productGrid" class="product-grid"></main>
+    <p id="emptyState" class="empty-state" hidden>Không tìm thấy sản phẩm phù hợp 🥹</p>
+  </main>
+
+  <button id="cartBtn" class="cart-fab" hidden><span class="cart-icon">🛍️</span><span><b><span id="cartCount">0</span> món</b><small><span id="cartTotal">0đ</span></small></span><strong>→</strong></button>
 </section>
 
-<!-- GIỎ HÀNG / ĐẶT HÀNG -->
-<div id="cartOverlay" class="overlay" hidden>
-  <div class="cart-sheet">
-    <div class="cart-header">
-      <h2>Giỏ hàng của bạn</h2>
-      <button id="closeCart" class="icon-btn">✕</button>
-    </div>
-    <div id="cartItems" class="cart-items"></div>
-    <textarea id="orderNote" placeholder="Ghi chú cho shop (không bắt buộc)"></textarea>
-    <div class="cart-footer">
-      <div class="cart-total-row">
-        <span>Tổng cộng</span>
-        <strong id="cartFooterTotal">0đ</strong>
-      </div>
-      <button id="submitOrderBtn">Gửi đơn cho shop</button>
-    </div>
+<div id="welcomeOverlay" class="modal-backdrop" hidden>
+  <div class="welcome-card glass">
+    <button id="closeWelcome" class="modal-close">×</button>
+    <div class="welcome-sparkle">💗</div>
+    <span class="eyebrow">LỜI CHÚC TỪ MIUMEOSHOP</span>
+    <h2>Chúc các bạn CTV thật nhiều đơn! 🎀</h2>
+    <p>Chúc bạn bán hàng thuận lợi, khách yêu, chốt đơn thật đều và cùng Miumeoshop phát triển thật lâu nhé ✨</p>
+    <button id="welcomeMusicBtn" class="primary-btn">Bắt đầu & bật nhạc ♫</button>
+    <button id="welcomeLater" class="text-btn big">Vào xem bảng giá</button>
   </div>
 </div>
 
-<!-- TOAST XÁC NHẬN -->
-<div id="toast" class="toast" hidden></div>
+<div id="cartOverlay" class="overlay" hidden>
+  <div class="cart-sheet glass">
+    <div class="cart-header"><div><span class="eyebrow">ORDER</span><h2>Giỏ hàng của bạn</h2></div><button id="closeCart" class="icon-btn">×</button></div>
+    <div id="cartItems" class="cart-items"></div>
+    <div class="note-title">Ghi chú đơn hàng</div>
+    <textarea id="orderNote" placeholder="Ví dụ: lấy màu đen, size M..."></textarea>
+    <div class="cart-footer"><div class="cart-total-row"><span>Tổng cộng</span><strong id="cartFooterTotal">0đ</strong></div><button id="submitOrderBtn" class="primary-btn">Gửi đơn cho shop <span>→</span></button></div>
+  </div>
+</div>
 
+<div id="toast" class="toast" hidden></div>
+<audio id="bgMusic" src="/nhac_nen.mp3" loop preload="auto"></audio>
 <script src="app.js"></script>
 </body>
 </html>
