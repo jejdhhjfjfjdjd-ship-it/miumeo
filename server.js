@@ -1,201 +1,40 @@
 require('dotenv').config();
-const express = require('express');
-const { Telegraf } = require('telegraf');
-const crypto = require('crypto');
-const db = require('./lib/db');
-
-const BOT_TOKEN = process.env.BOT_TOKEN;
-const ADMIN_CHAT_ID = process.env.ADMIN_CHAT_ID;
-const PORT = process.env.PORT || 3000;
-
-if (!BOT_TOKEN) {
-  console.error('Thieu BOT_TOKEN trong file .env. Xem README.md de biet cach lay token.');
-  process.exit(1);
-}
-
-let products = db.load('products.json', []);
-let ctvs = db.load('ctv.json', []);
-let orders = db.load('orders.json', []);
-
-const bot = new Telegraf(BOT_TOKEN);
-
-function isAdmin(ctx) {
-  return ADMIN_CHAT_ID && String(ctx.chat.id) === String(ADMIN_CHAT_ID);
-}
-
-function money(n) {
-  return Number(n || 0).toLocaleString('vi-VN') + 'd';
-}
-
-// ---------- BOT: chi admin moi dung duoc ----------
-
-bot.start((ctx) => {
-  const msg = isAdmin(ctx)
-    ? 'Xin chao Admin! Go /help de xem cac lenh quan ly Miumeoshop.'
-    : `Chat ID cua ban: ${ctx.chat.id}\nBot nay chi phuc vu quan ly noi bo shop.`;
-  ctx.reply(msg);
-});
-
-bot.help((ctx) => {
-  if (!isAdmin(ctx)) return;
-  ctx.reply(
-    'CAC LENH QUAN LY\n\n' +
-    'Them san pham: gui 1 anh, phan chu thich (caption) ghi "Ten san pham | Gia"\n' +
-    'Vi du caption: Ao thun trang | 120000\n\n' +
-    '/dssp - xem danh sach san pham\n' +
-    '/suagia [ma_sp] [gia moi] - sua gia\n' +
-    '/xoasp [ma_sp] - xoa san pham\n\n' +
-    '/themctv [ten CTV] - tao ma dang nhap cho CTV moi\n' +
-    '/dsctv - xem danh sach CTV va ma\n' +
-    '/xoactv [ma] - xoa 1 CTV\n\n' +
-    '/dondathang - xem 10 don hang gan nhat'
-  );
-});
-
-// Them san pham bang cach gui anh + caption "Ten | Gia"
-bot.on('photo', async (ctx) => {
-  if (!isAdmin(ctx)) return;
-  const caption = ctx.message.caption || '';
-  const parts = caption.split('|').map((s) => s.trim());
-  if (parts.length < 2 || !parts[0] || !parts[1]) {
-    return ctx.reply('Thieu thong tin. Ghi caption dang: Ten san pham | Gia\nVi du: Ao thun trang | 120000');
-  }
-  const [name, priceRaw] = parts;
-  const price = parseInt(priceRaw.replace(/\D/g, ''), 10) || 0;
-
-  const photos = ctx.message.photo;
-  const fileId = photos[photos.length - 1].file_id;
-  const fileLink = await ctx.telegram.getFileLink(fileId);
-
-  const id = crypto.randomBytes(3).toString('hex');
-  const product = { id, name, price, image: fileLink.href, createdAt: Date.now() };
-  products.push(product);
-  db.save('products.json', products);
-
-  ctx.reply(`Da them san pham:\n${name} - ${money(price)}\nMa san pham: ${id}`);
-});
-
-bot.command('dssp', (ctx) => {
-  if (!isAdmin(ctx)) return;
-  if (!products.length) return ctx.reply('Chua co san pham nao. Gui anh + caption "Ten | Gia" de them.');
-  const text = products.map((p) => `${p.id} | ${p.name} | ${money(p.price)}`).join('\n');
-  ctx.reply(text);
-});
-
-bot.command('suagia', (ctx) => {
-  if (!isAdmin(ctx)) return;
-  const args = ctx.message.text.split(' ').slice(1);
-  if (args.length < 2) return ctx.reply('Cu phap: /suagia [ma_sp] [gia moi]');
-  const [id, priceRaw] = args;
-  const p = products.find((x) => x.id === id);
-  if (!p) return ctx.reply('Khong tim thay san pham voi ma nay. Go /dssp de xem danh sach.');
-  p.price = parseInt(priceRaw.replace(/\D/g, ''), 10) || p.price;
-  db.save('products.json', products);
-  ctx.reply(`Da cap nhat gia "${p.name}" -> ${money(p.price)}`);
-});
-
-bot.command('xoasp', (ctx) => {
-  if (!isAdmin(ctx)) return;
-  const id = ctx.message.text.split(' ')[1];
-  const before = products.length;
-  products = products.filter((x) => x.id !== id);
-  db.save('products.json', products);
-  ctx.reply(before === products.length ? 'Khong tim thay san pham nay.' : 'Da xoa san pham.');
-});
-
-bot.command('themctv', (ctx) => {
-  if (!isAdmin(ctx)) return;
-  const name = ctx.message.text.split(' ').slice(1).join(' ').trim();
-  if (!name) return ctx.reply('Cu phap: /themctv [ten CTV]');
-  const code = crypto.randomBytes(4).toString('hex').toUpperCase();
-  ctvs.push({ code, name, createdAt: Date.now() });
-  db.save('ctv.json', ctvs);
-  ctx.reply(`Da tao CTV "${name}"\nMa dang nhap: ${code}\n(Gui ma nay cho CTV de ho vao web)`);
-});
-
-bot.command('dsctv', (ctx) => {
-  if (!isAdmin(ctx)) return;
-  if (!ctvs.length) return ctx.reply('Chua co CTV nao. Go /themctv [ten] de tao.');
-  const text = ctvs.map((c) => `${c.name} - ma: ${c.code}`).join('\n');
-  ctx.reply(text);
-});
-
-bot.command('xoactv', (ctx) => {
-  if (!isAdmin(ctx)) return;
-  const code = (ctx.message.text.split(' ')[1] || '').toUpperCase();
-  const before = ctvs.length;
-  ctvs = ctvs.filter((c) => c.code !== code);
-  db.save('ctv.json', ctvs);
-  ctx.reply(before === ctvs.length ? 'Khong tim thay ma nay.' : 'Da xoa CTV.');
-});
-
-bot.command('dondathang', (ctx) => {
-  if (!isAdmin(ctx)) return;
-  if (!orders.length) return ctx.reply('Chua co don hang nao.');
-  const recent = orders.slice(-10).reverse();
-  const text = recent
-    .map((o) => {
-      const items = o.items.map((i) => `  - ${i.name} x${i.qty}`).join('\n');
-      return `Don #${o.id} - ${o.ctvName}\n${items}\nGhi chu: ${o.note || '(khong co)'}`;
-    })
-    .join('\n\n');
-  ctx.reply(text);
-});
-
-bot.launch();
-console.log('Bot Telegram da khoi dong.');
-
-// ---------- WEB API cho trang CTV ----------
-
-const app = express();
-app.use(express.json());
-app.use(express.static('public'));
-
-function findCtv(code) {
-  return ctvs.find((c) => c.code === String(code || '').toUpperCase());
-}
-
-app.post('/api/login', (req, res) => {
-  const ctv = findCtv(req.body.code);
-  if (!ctv) return res.status(401).json({ error: 'Ma khong dung' });
-  res.json({ ok: true, name: ctv.name });
-});
-
-app.get('/api/products', (req, res) => {
-  if (!findCtv(req.query.code)) return res.status(401).json({ error: 'Chua dang nhap' });
-  res.json(products);
-});
-
-app.post('/api/order', (req, res) => {
-  const { code, items, note } = req.body;
-  const ctv = findCtv(code);
-  if (!ctv) return res.status(401).json({ error: 'Ma khong dung' });
-  if (!items || !items.length) return res.status(400).json({ error: 'Chua chon san pham nao' });
-
-  const order = {
-    id: orders.length + 1,
-    ctvCode: ctv.code,
-    ctvName: ctv.name,
-    items,
-    note: note || '',
-    createdAt: Date.now(),
-  };
-  orders.push(order);
-  db.save('orders.json', orders);
-
-  const summary = items.map((i) => `- ${i.name} x${i.qty}`).join('\n');
-  if (ADMIN_CHAT_ID) {
-    bot.telegram
-      .sendMessage(
-        ADMIN_CHAT_ID,
-        `DON HANG MOI #${order.id}\nCTV: ${ctv.name}\n${summary}\nGhi chu: ${note || '(khong co)'}`
-      )
-      .catch((e) => console.error('Khong gui duoc thong bao Telegram:', e.message));
-  }
-  res.json({ ok: true, orderId: order.id });
-});
-
-app.listen(PORT, () => console.log(`Web CTV dang chay tai cong ${PORT}`));
-
-process.once('SIGINT', () => bot.stop('SIGINT'));
-process.once('SIGTERM', () => bot.stop('SIGTERM'));
+const express=require('express');
+const {Telegraf,Markup}=require('telegraf');
+const crypto=require('crypto');
+const db=require('./lib/db');
+const BOT_TOKEN=process.env.BOT_TOKEN,ADMIN_CHAT_ID=process.env.ADMIN_CHAT_ID,PORT=process.env.PORT||3000;
+if(!BOT_TOKEN){console.error('Thieu BOT_TOKEN');process.exit(1)}
+let products=db.load('products.json',[]).map(p=>({...p,category:p.category||'unisex'}));
+let ctvs=db.load('ctv.json',[]);let orders=db.load('orders.json',[]);
+const bot=new Telegraf(BOT_TOKEN);const app=express();app.use(express.json({limit:'2mb'}));app.use(express.static('public'));
+const isAdmin=ctx=>ADMIN_CHAT_ID&&String(ctx.chat?.id)===String(ADMIN_CHAT_ID);const money=n=>Number(n||0).toLocaleString('vi-VN')+'đ';
+const menu=()=>Markup.inlineKeyboard([[Markup.button.callback('➕ Thêm sản phẩm','add_help'),Markup.button.callback('📦 Sản phẩm','products')],[Markup.button.callback('👥 CTV','ctvs'),Markup.button.callback('🧾 Đơn hàng','orders')],[Markup.button.callback('📊 Thống kê','stats'),Markup.button.callback('❓ Hướng dẫn','help')]]);
+const catKeyboard=id=>Markup.inlineKeyboard([[Markup.button.callback('🎀 Nữ','cat_nu_'+id),Markup.button.callback('🖤 Nam','cat_nam_'+id)],[Markup.button.callback('🤍 Unisex','cat_unisex_'+id)]]);
+function adminOnly(ctx){if(!isAdmin(ctx)){ctx.reply('⛔ Khu vực quản trị.');return false}return true}
+function menuText(){return '🎀 <b>MIUMEOSHOP ADMIN</b>\n\nChào Admin! Chọn chức năng bên dưới để quản lý shop.'}
+async function sendMenu(ctx){return ctx.reply(menuText(),{parse_mode:'HTML',...menu()})}
+bot.start(ctx=>isAdmin(ctx)?sendMenu(ctx):ctx.reply('🤖 Bot quản lý Miumeoshop.\nChat ID của bạn: '+ctx.chat.id));
+bot.command('menu',ctx=>{if(adminOnly(ctx))sendMenu(ctx)});bot.command('help',ctx=>{if(adminOnly(ctx))ctx.reply('📸 Thêm sản phẩm: gửi ảnh + caption\n<code>Tên | Giá | Nữ/Nam/Unisex</code>\n\nVí dụ:\nÁo baby tee | 129000 | Nữ\n\nHoặc gửi ảnh + caption rồi bot sẽ hỏi danh mục.',{parse_mode:'HTML'})});
+bot.on('photo',async ctx=>{if(!adminOnly(ctx))return;const parts=(ctx.message.caption||'').split('|').map(s=>s.trim());if(parts.length<2)return ctx.reply('❌ Caption cần: Tên | Giá | Nữ/Nam/Unisex');const name=parts[0],price=parseInt(parts[1].replace(/\D/g,''),10)||0;let category=(parts[2]||'').toLowerCase();category=category.startsWith('nữ')||category==='nu'?'nu':category.startsWith('nam')?'nam':category==='unisex'?'unisex':'';if(!name||!price)return ctx.reply('❌ Tên hoặc giá chưa đúng.');const fileId=ctx.message.photo.at(-1).file_id;const link=await ctx.telegram.getFileLink(fileId);const id=crypto.randomBytes(3).toString('hex');const p={id,name,price,image:link.href,category:category||'unisex',createdAt:Date.now()};products.push(p);db.save('products.json',products);if(!category){await ctx.reply(`✨ <b>${name}</b>\n💰 ${money(price)}\n\nChọn danh mục:`,{parse_mode:'HTML',...catKeyboard(id)})}else ctx.reply(`✅ Đã thêm <b>${name}</b>\n💰 ${money(price)}\n🏷️ ${category==='nu'?'Đồ nữ':category==='nam'?'Đồ nam':'Unisex'}`,{parse_mode:'HTML'})});
+bot.action(/^cat_(nu|nam|unisex)_(.+)$/,async ctx=>{if(!isAdmin(ctx))return;const[,cat,id]=ctx.match;const p=products.find(x=>x.id===id);if(!p)return ctx.answerCbQuery('Sản phẩm không tồn tại');p.category=cat;db.save('products.json',products);await ctx.answerCbQuery('Đã cập nhật');await ctx.editMessageText(`✅ <b>${p.name}</b>\n💰 ${money(p.price)}\n🏷️ ${cat==='nu'?'Đồ nữ':cat==='nam'?'Đồ nam':'Unisex'}`,{parse_mode:'HTML'})});
+bot.action('add_help',ctx=>{if(!adminOnly(ctx))return;ctx.answerCbQuery();ctx.reply('📸 Gửi ảnh sản phẩm với caption:\n\n<code>Tên | Giá | Nữ</code>\n<code>Áo hoodie | 189000 | Nam</code>\n\nDanh mục: Nữ / Nam / Unisex',{parse_mode:'HTML'})});
+bot.action('products',async ctx=>{if(!adminOnly(ctx))return;ctx.answerCbQuery();if(!products.length)return ctx.reply('📦 Chưa có sản phẩm.');const text=products.slice(-30).reverse().map(p=>`<b>${p.id}</b> • ${p.name}\n💰 ${money(p.price)} • 🏷️ ${p.category==='nu'?'Nữ':p.category==='nam'?'Nam':'Unisex'}`).join('\n\n');ctx.reply('📦 <b>SẢN PHẨM</b>\n\n'+text,{parse_mode:'HTML'})});
+bot.action('ctvs',async ctx=>{if(!adminOnly(ctx))return;ctx.answerCbQuery();if(!ctvs.length)return ctx.reply('👥 Chưa có CTV.');ctx.reply('👥 <b>DANH SÁCH CTV</b>\n\n'+ctvs.map(c=>`• ${c.name}\n  🔑 <code>${c.code}</code>`).join('\n\n'),{parse_mode:'HTML'})});
+bot.action('orders',async ctx=>{if(!adminOnly(ctx))return;ctx.answerCbQuery();if(!orders.length)return ctx.reply('🧾 Chưa có đơn.');const recent=orders.slice(-10).reverse();ctx.reply('🧾 <b>10 ĐƠN GẦN NHẤT</b>\n\n'+recent.map(o=>`#${o.id} • ${o.ctvName}\n${o.items.map(i=>`• ${i.name} ×${i.qty}`).join('\n')}\n💰 ${money(o.items.reduce((s,i)=>s+i.price*i.qty,0))}\n📝 ${o.note||'Không ghi chú'}`).join('\n\n'),{parse_mode:'HTML'})});
+bot.action('stats',async ctx=>{if(!adminOnly(ctx))return;ctx.answerCbQuery();const revenue=orders.reduce((s,o)=>s+o.items.reduce((a,i)=>a+i.price*i.qty,0),0);ctx.reply(`📊 <b>THỐNG KÊ</b>\n\n📦 Sản phẩm: <b>${products.length}</b>\n👥 CTV: <b>${ctvs.length}</b>\n🧾 Đơn hàng: <b>${orders.length}</b>\n💰 Tổng giá trị đơn: <b>${money(revenue)}</b>`,{parse_mode:'HTML'})});
+bot.action('help',ctx=>{if(!adminOnly(ctx))return;ctx.answerCbQuery();ctx.reply('❓ <b>HƯỚNG DẪN NHANH</b>\n\n• Gửi ảnh + <code>Tên | Giá | Danh mục</code> để thêm hàng.\n• /themctv Tên để tạo CTV.\n• /xoactv MÃ để thu hồi.\n• /suagia MÃ GIÁ để sửa giá.\n• /xoasp MÃ để xoá hàng.',{parse_mode:'HTML'})});
+bot.command('themctv',ctx=>{if(!adminOnly(ctx))return;const name=ctx.message.text.split(' ').slice(1).join(' ').trim();if(!name)return ctx.reply('Dùng: /themctv Tên CTV');const code=crypto.randomBytes(4).toString('hex').toUpperCase();ctvs.push({code,name,createdAt:Date.now()});db.save('ctv.json',ctvs);ctx.reply(`👥 Đã tạo CTV <b>${name}</b>\n🔑 Mã: <code>${code}</code>`,{parse_mode:'HTML'})});
+bot.command('xoactv',ctx=>{if(!adminOnly(ctx))return;const code=(ctx.message.text.split(' ')[1]||'').toUpperCase();const old=ctvs.length;ctvs=ctvs.filter(c=>c.code!==code);db.save('ctv.json',ctvs);ctx.reply(old===ctvs.length?'Không tìm thấy mã.':'✅ Đã thu hồi CTV.')});
+bot.command('suagia',ctx=>{if(!adminOnly(ctx))return;const [,id,raw]=ctx.message.text.split(' ');const p=products.find(x=>x.id===id);if(!p)return ctx.reply('Không tìm thấy sản phẩm.');const price=parseInt((raw||'').replace(/\D/g,''),10);if(!price)return ctx.reply('Giá không hợp lệ.');p.price=price;db.save('products.json',products);ctx.reply(`✅ ${p.name}\n💰 ${money(price)}`)});
+bot.command('xoasp',ctx=>{if(!adminOnly(ctx))return;const id=ctx.message.text.split(' ')[1];const n=products.length;products=products.filter(p=>p.id!==id);db.save('products.json',products);ctx.reply(n===products.length?'Không tìm thấy sản phẩm.':'🗑️ Đã xoá sản phẩm.')});
+bot.command('dssp',ctx=>{if(!adminOnly(ctx))return;if(!products.length)return ctx.reply('📦 Chưa có sản phẩm.');ctx.reply(products.slice(-30).reverse().map(p=>`${p.id} | ${p.name} | ${money(p.price)} | ${p.category||'unisex'}`).join('\n'))});
+bot.command('dondathang',ctx=>{if(adminOnly(ctx))ctx.reply(orders.slice(-10).reverse().map(o=>`#${o.id} ${o.ctvName}: ${o.items.map(i=>i.name+' x'+i.qty).join(', ')}`).join('\n\n')||'Chưa có đơn')});
+bot.launch().then(()=>console.log('Telegram bot ready')).catch(e=>console.error('Bot error',e));
+function findCtv(code){return ctvs.find(c=>c.code===String(code||'').toUpperCase())}
+app.post('/api/login',(req,res)=>{const c=findCtv(req.body.code);if(!c)return res.status(401).json({error:'Mã CTV không đúng'});res.json({ok:true,name:c.name})});
+app.get('/api/products',(req,res)=>{if(!findCtv(req.query.code))return res.status(401).json({error:'Chưa đăng nhập'});res.json(products)});
+app.post('/api/order',(req,res)=>{const{code,items,note}=req.body,c=findCtv(code);if(!c)return res.status(401).json({error:'Mã CTV không đúng'});if(!Array.isArray(items)||!items.length)return res.status(400).json({error:'Chưa chọn sản phẩm'});const safeItems=items.map(i=>{const p=products.find(x=>x.id===i.id);return p?{id:p.id,name:p.name,price:p.price,qty:Math.max(1,Math.min(99,Number(i.qty)||1))}:null}).filter(Boolean);if(!safeItems.length)return res.status(400).json({error:'Sản phẩm không còn tồn tại'});const order={id:orders.length+1,ctvCode:c.code,ctvName:c.name,items:safeItems,note:String(note||'').slice(0,500),createdAt:Date.now()};orders.push(order);db.save('orders.json',orders);const sum=safeItems.reduce((s,i)=>s+i.price*i.qty,0);if(ADMIN_CHAT_ID)bot.telegram.sendMessage(ADMIN_CHAT_ID,`🔔 <b>ĐƠN MỚI #${order.id}</b>\n👤 CTV: <b>${c.name}</b>\n\n${safeItems.map(i=>`• ${i.name} ×${i.qty} — ${money(i.price*i.qty)}`).join('\n')}\n\n💰 <b>Tổng: ${money(sum)}</b>\n📝 ${order.note||'Không ghi chú'}`,{parse_mode:'HTML'}).catch(e=>console.error(e.message));res.json({ok:true,orderId:order.id})});
+app.get('/health',(req,res)=>res.json({ok:true,products:products.length,ctvs:ctvs.length}));
+app.listen(PORT,()=>console.log('Web running on '+PORT));
+process.once('SIGINT',()=>bot.stop('SIGINT'));process.once('SIGTERM',()=>bot.stop('SIGTERM'));
