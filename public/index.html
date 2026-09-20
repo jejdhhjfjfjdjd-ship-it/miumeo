@@ -25,7 +25,8 @@
       <button type="submit" class="primary-btn">Vào shop <span>→</span></button>
     </form>
     <p id="loginError" class="login-error" hidden></p>
-    <div class="login-note">🔒 Mỗi CTV dùng một mã riêng</div>
+    <div class="login-note">🔒 Mỗi CTV dùng một mã riêng • 1 mã = 1 thiết bị</div>
+    <button id="adminOpenBtn" class="text-btn admin-open">⚙️ Quản trị shop</button>
   </div>
 </section>
 
@@ -61,6 +62,21 @@
 
   <button id="cartBtn" class="cart-fab" hidden><span class="cart-icon">🛍️</span><span><b><span id="cartCount">0</span> món</b><small><span id="cartTotal">0đ</span></small></span><strong>→</strong></button>
 </section>
+
+<section id="adminScreen" class="screen admin-screen" hidden>
+  <header class="topbar glass"><div class="brand"><img src="assets/logo.png" alt="Miumeoshop" /><div><b>miumeoshop</b><small>QUẢN TRỊ SHOP</small></div></div><button id="adminLogout" class="icon-ghost">↪</button></header>
+  <main class="admin-main">
+    <section class="admin-hero glass"><div><span class="eyebrow">MASTER CONTROL</span><h2>Quản lý shop ⚡</h2><p>Sửa giá, thêm mẫu và theo dõi thiết bị CTV.</p></div><div class="admin-badge">🔐</div></section>
+    <section class="admin-grid">
+      <div class="admin-card glass"><h3>➕ Thêm sản phẩm</h3><input id="aName" placeholder="Tên sản phẩm"><input id="aPrice" type="number" placeholder="Giá CTV"><input id="aImage" placeholder="Link ảnh (tuỳ chọn)"><select id="aCat"><option value="nu">🎀 Đồ nữ</option><option value="nam">🖤 Đồ nam</option><option value="unisex">🤍 Unisex</option></select><button id="aAdd" class="primary-btn">Thêm sản phẩm</button></div>
+      <div class="admin-card glass"><h3>🎬 Khu troll</h3><p>Đặt video TikTok troll của bạn tại <code>/troll.mp4</code>. Video sẽ xuất hiện sau khi CTV đăng nhập.</p><div class="admin-tip">💡 Video nên ngắn, MP4. Trình duyệt có thể tự phát ở chế độ im lặng.</div></div>
+    </section>
+    <section class="admin-card glass"><div class="admin-section-head"><h3>📦 Sản phẩm</h3><button id="aRefreshProducts" class="text-btn">Làm mới</button></div><div id="adminProducts" class="admin-list"></div></section>
+    <section class="admin-card glass"><div class="admin-section-head"><h3>👥 CTV & thiết bị</h3><button id="aRefreshCtvs" class="text-btn">Làm mới</button></div><div id="adminCtvs" class="admin-list"></div></section>
+  </main>
+</section>
+
+<div id="trollOverlay" class="modal-backdrop" hidden><div class="troll-card glass"><button id="closeTroll" class="modal-close">×</button><span class="eyebrow">MIUMEOSHOP TROLL 😂</span><h2>Khoan... xem cái này đã 😭</h2><video id="trollVideo" controls playsinline muted preload="metadata" src="/troll.mp4"></video><p>Không thích thì đóng lại nhé 😂</p></div></div>
 
 <div id="welcomeOverlay" class="modal-backdrop" hidden>
   <div class="welcome-card glass">
