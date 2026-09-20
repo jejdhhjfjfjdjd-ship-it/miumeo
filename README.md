@@ -55,3 +55,19 @@ Lưu ý: cơ chế này dựa trên mã thiết bị lưu trong trình duyệt n
 `public/troll.mp4`
 
 Sau khi CTV đăng nhập và đóng lời chúc, video troll sẽ xuất hiện một lần trong phiên. Video được mở `muted` để phù hợp giới hạn autoplay của iPhone/Safari.
+
+## V6 — Telegram Mini App
+Bot đã có Mini App quản trị giao diện mobile:
+- Nút **🚀 Mở Mini App** trong `/menu`.
+- Nút **🛍️ Mini App** ở menu chat Telegram (nếu `MINIAPP_URL` đã cấu hình).
+- Dashboard: số sản phẩm, CTV, đơn và doanh số.
+- Quản lý sản phẩm: thêm/sửa/xóa, đổi giá, danh mục.
+- Chọn ảnh trực tiếp từ thư viện điện thoại; ảnh được gửi dạng data URL đã giới hạn kích thước ở server.
+- Quản lý CTV và mở khóa thiết bị.
+- Xem 20 đơn gần nhất.
+- Mini App xác thực `Telegram.WebApp.initData` bằng HMAC; chỉ `ADMIN_CHAT_ID` được phép dùng API quản trị Mini App.
+
+### Railway thêm biến
+`MINIAPP_URL=https://DOMAIN-CUA-BAN/miniapp.html`
+
+URL phải là **HTTPS** để Telegram Web App hoạt động. Sau khi deploy, gửi `/menu` cho bot hoặc mở lại chat để thấy nút Mini App.

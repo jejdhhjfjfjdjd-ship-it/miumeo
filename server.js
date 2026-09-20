@@ -3,19 +3,19 @@ const express=require('express');
 const {Telegraf,Markup}=require('telegraf');
 const crypto=require('crypto');
 const db=require('./lib/db');
-const BOT_TOKEN=process.env.BOT_TOKEN,ADMIN_CHAT_ID=process.env.ADMIN_CHAT_ID,ADMIN_CODE=process.env.ADMIN_CODE,PORT=process.env.PORT||3000;
+const BOT_TOKEN=process.env.BOT_TOKEN,ADMIN_CHAT_ID=process.env.ADMIN_CHAT_ID,ADMIN_CODE=process.env.ADMIN_CODE,MINIAPP_URL=process.env.MINIAPP_URL,PORT=process.env.PORT||3000;
 if(!BOT_TOKEN){console.error('Thieu BOT_TOKEN');process.exit(1)}
 let products=db.load('products.json',[]).map(p=>({...p,category:p.category||'unisex'}));
 let ctvs=db.load('ctv.json',[]);let orders=db.load('orders.json',[]);
 const bot=new Telegraf(BOT_TOKEN);const app=express();app.use(express.json({limit:'8mb'}));app.use(express.static('public'));
 const isAdmin=ctx=>ADMIN_CHAT_ID&&String(ctx.chat?.id)===String(ADMIN_CHAT_ID);const money=n=>Number(n||0).toLocaleString('vi-VN')+'đ';
-const menu=()=>Markup.inlineKeyboard([[Markup.button.callback('➕ Thêm sản phẩm','add_help'),Markup.button.callback('📦 Sản phẩm','products')],[Markup.button.callback('👥 CTV','ctvs'),Markup.button.callback('🧾 Đơn hàng','orders')],[Markup.button.callback('📊 Thống kê','stats'),Markup.button.callback('❓ Hướng dẫn','help')]]);
+const menu=()=>Markup.inlineKeyboard([[MINIAPP_URL?Markup.button.webApp('🚀 Mở Mini App',MINIAPP_URL):Markup.button.callback('📱 Mini App chưa cấu hình','help')],[Markup.button.callback('➕ Thêm sản phẩm','add_help'),Markup.button.callback('📦 Sản phẩm','products')],[Markup.button.callback('👥 CTV','ctvs'),Markup.button.callback('🧾 Đơn hàng','orders')],[Markup.button.callback('📊 Thống kê','stats'),Markup.button.callback('❓ Hướng dẫn','help')]]);
 const catKeyboard=id=>Markup.inlineKeyboard([[Markup.button.callback('🎀 Nữ','cat_nu_'+id),Markup.button.callback('🖤 Nam','cat_nam_'+id)],[Markup.button.callback('🤍 Unisex','cat_unisex_'+id)]]);
 function adminOnly(ctx){if(!isAdmin(ctx)){ctx.reply('⛔ Khu vực quản trị.');return false}return true}
 function menuText(){return '🎀 <b>MIUMEOSHOP ADMIN</b>\n\nChào Admin! Chọn chức năng bên dưới để quản lý shop.'}
 async function sendMenu(ctx){return ctx.reply(menuText(),{parse_mode:'HTML',...menu()})}
 bot.start(ctx=>isAdmin(ctx)?sendMenu(ctx):ctx.reply('🤖 Bot quản lý Miumeoshop.\nChat ID của bạn: '+ctx.chat.id));
-bot.command('menu',ctx=>{if(adminOnly(ctx))sendMenu(ctx)});bot.command('help',ctx=>{if(adminOnly(ctx))ctx.reply('📸 Thêm sản phẩm: gửi ảnh + caption\n<code>Tên | Giá | Nữ/Nam/Unisex</code>\n\nVí dụ:\nÁo baby tee | 129000 | Nữ\n\nHoặc gửi ảnh + caption rồi bot sẽ hỏi danh mục.',{parse_mode:'HTML'})});
+bot.command('miniapp',ctx=>{if(!adminOnly(ctx))return;if(!MINIAPP_URL)return ctx.reply('⚠️ Chưa cấu hình MINIAPP_URL trên Railway.');ctx.reply('🚀 Mở Mini App quản trị Miumeoshop',Markup.inlineKeyboard([[Markup.button.webApp('✨ Mở Mini App',MINIAPP_URL)]]))});bot.command('menu',ctx=>{if(adminOnly(ctx))sendMenu(ctx)});bot.command('help',ctx=>{if(adminOnly(ctx))ctx.reply('📸 Thêm sản phẩm: gửi ảnh + caption\n<code>Tên | Giá | Nữ/Nam/Unisex</code>\n\nVí dụ:\nÁo baby tee | 129000 | Nữ\n\nHoặc gửi ảnh + caption rồi bot sẽ hỏi danh mục.',{parse_mode:'HTML'})});
 bot.on('photo',async ctx=>{if(!adminOnly(ctx))return;const parts=(ctx.message.caption||'').split('|').map(s=>s.trim());if(parts.length<2)return ctx.reply('❌ Caption cần: Tên | Giá | Nữ/Nam/Unisex');const name=parts[0],price=parseInt(parts[1].replace(/\D/g,''),10)||0;let category=(parts[2]||'').toLowerCase();category=category.startsWith('nữ')||category==='nu'?'nu':category.startsWith('nam')?'nam':category==='unisex'?'unisex':'';if(!name||!price)return ctx.reply('❌ Tên hoặc giá chưa đúng.');const fileId=ctx.message.photo.at(-1).file_id;const link=await ctx.telegram.getFileLink(fileId);const id=crypto.randomBytes(3).toString('hex');const p={id,name,price,image:link.href,category:category||'unisex',createdAt:Date.now()};products.push(p);db.save('products.json',products);if(!category){await ctx.reply(`✨ <b>${name}</b>\n💰 ${money(price)}\n\nChọn danh mục:`,{parse_mode:'HTML',...catKeyboard(id)})}else ctx.reply(`✅ Đã thêm <b>${name}</b>\n💰 ${money(price)}\n🏷️ ${category==='nu'?'Đồ nữ':category==='nam'?'Đồ nam':'Unisex'}`,{parse_mode:'HTML'})});
 bot.action(/^cat_(nu|nam|unisex)_(.+)$/,async ctx=>{if(!isAdmin(ctx))return;const[,cat,id]=ctx.match;const p=products.find(x=>x.id===id);if(!p)return ctx.answerCbQuery('Sản phẩm không tồn tại');p.category=cat;db.save('products.json',products);await ctx.answerCbQuery('Đã cập nhật');await ctx.editMessageText(`✅ <b>${p.name}</b>\n💰 ${money(p.price)}\n🏷️ ${cat==='nu'?'Đồ nữ':cat==='nam'?'Đồ nam':'Unisex'}`,{parse_mode:'HTML'})});
 bot.action('add_help',ctx=>{if(!adminOnly(ctx))return;ctx.answerCbQuery();ctx.reply('📸 Gửi ảnh sản phẩm với caption:\n\n<code>Tên | Giá | Nữ</code>\n<code>Áo hoodie | 189000 | Nam</code>\n\nDanh mục: Nữ / Nam / Unisex',{parse_mode:'HTML'})});
@@ -30,7 +30,7 @@ bot.command('suagia',ctx=>{if(!adminOnly(ctx))return;const [,id,raw]=ctx.message
 bot.command('xoasp',ctx=>{if(!adminOnly(ctx))return;const id=ctx.message.text.split(' ')[1];const n=products.length;products=products.filter(p=>p.id!==id);db.save('products.json',products);ctx.reply(n===products.length?'Không tìm thấy sản phẩm.':'🗑️ Đã xoá sản phẩm.')});
 bot.command('dssp',ctx=>{if(!adminOnly(ctx))return;if(!products.length)return ctx.reply('📦 Chưa có sản phẩm.');ctx.reply(products.slice(-30).reverse().map(p=>`${p.id} | ${p.name} | ${money(p.price)} | ${p.category||'unisex'}`).join('\n'))});
 bot.command('dondathang',ctx=>{if(adminOnly(ctx))ctx.reply(orders.slice(-10).reverse().map(o=>`#${o.id} ${o.ctvName}: ${o.items.map(i=>i.name+' x'+i.qty).join(', ')}`).join('\n\n')||'Chưa có đơn')});
-bot.launch().then(()=>console.log('Telegram bot ready')).catch(e=>console.error('Bot error',e));
+bot.launch().then(async()=>{console.log('Telegram bot ready');if(MINIAPP_URL){try{await bot.telegram.setChatMenuButton({menu_button:{type:'web_app',text:'🛍️ Mini App',web_app:{url:MINIAPP_URL}}});console.log('Telegram Mini App menu ready')}catch(e){console.error('Mini App menu error',e.message)}}}).catch(e=>console.error('Bot error',e));
 function findCtv(code){return ctvs.find(c=>c.code===String(code||'').toUpperCase())}
 function normalizeDevice(device){return String(device||'').slice(0,120)}
 function platformFromUA(ua){ua=String(ua||'').toLowerCase();if(/iphone|ipad|ipod/.test(ua))return 'iPhone/iPad';if(/android/.test(ua))return 'Android';if(/windows/.test(ua))return 'Windows';if(/mac os|macintosh/.test(ua))return 'Mac';return 'Khác'}
@@ -42,6 +42,23 @@ function cleanImage(image){
   return v.slice(0,1000);
 }
 function adminProducts(req,res){if(!isAdminCode(req.headers['x-admin-code']))return res.status(401).json({error:'Mã quản trị không đúng'});res.json(products)}
+function validateTelegramWebApp(initData){
+  if(!initData||!BOT_TOKEN) return null;
+  const params=new URLSearchParams(initData); const hash=params.get('hash'); if(!hash)return null;
+  params.delete('hash');
+  const dataCheck=Array.from(params.entries()).sort((a,b)=>a[0].localeCompare(b[0])).map(([k,v])=>`${k}=${v}`).join('\n');
+  const secret=crypto.createHmac('sha256','WebAppData').update(BOT_TOKEN).digest();
+  const calc=crypto.createHmac('sha256',secret).update(dataCheck).digest('hex');
+  if(!crypto.timingSafeEqual(Buffer.from(calc,'hex'),Buffer.from(hash,'hex')))return null;
+  const authDate=Number(params.get('auth_date')||0); if(!authDate||Date.now()/1000-authDate>86400)return null;
+  let user=null; try{user=JSON.parse(params.get('user')||'null')}catch{}
+  return user;
+}
+function miniAdmin(req,res,next){
+  const user=validateTelegramWebApp(req.headers['x-telegram-init-data']);
+  if(!user||String(user.id)!==String(ADMIN_CHAT_ID))return res.status(401).json({error:'Mini App chỉ dành cho Admin Telegram'});
+  req.tgUser=user; next();
+}
 app.post('/api/login',(req,res)=>{const c=findCtv(req.body.code);if(!c)return res.status(401).json({error:'Mã CTV không đúng'});const device=normalizeDevice(req.body.deviceId);if(!device)return res.status(400).json({error:'Thiết bị chưa được nhận diện'});if(c.deviceId && c.deviceId!==device)return res.status(409).json({error:'Mã CTV này đã được khóa cho một thiết bị khác.'});const other=ctvs.find(x=>x.code!==c.code&&x.deviceId===device);if(other)return res.status(409).json({error:'Thiết bị này đã liên kết với một mã CTV khác.'});if(!c.deviceId){c.deviceId=device;c.platform=platformFromUA(req.headers['user-agent']);c.lastSeen=Date.now();db.save('ctv.json',ctvs)}else{c.lastSeen=Date.now();db.save('ctv.json',ctvs)}res.json({ok:true,name:c.name,platform:c.platform||platformFromUA(req.headers['user-agent'])})});
 app.post('/api/admin/login',(req,res)=>{if(!isAdminCode(req.body.code))return res.status(401).json({error:'Mã quản trị không đúng'});res.json({ok:true})});
 app.get('/api/admin/products',adminProducts);
@@ -50,6 +67,20 @@ app.post('/api/admin/product',(req,res)=>{if(!isAdminCode(req.headers['x-admin-c
 app.post('/api/admin/ctv/unbind',(req,res)=>{if(!isAdminCode(req.headers['x-admin-code']))return res.status(401).json({error:'Mã quản trị không đúng'});const c=findCtv(req.body.code);if(!c)return res.status(404).json({error:'Không tìm thấy CTV'});delete c.deviceId;delete c.platform;delete c.lastSeen;db.save('ctv.json',ctvs);res.json({ok:true})});
 app.get('/api/products',(req,res)=>{if(!findCtv(req.query.code))return res.status(401).json({error:'Chưa đăng nhập'});res.json(products)});
 app.post('/api/order',(req,res)=>{const{code,items,note}=req.body,c=findCtv(code);if(!c)return res.status(401).json({error:'Mã CTV không đúng'});if(!Array.isArray(items)||!items.length)return res.status(400).json({error:'Chưa chọn sản phẩm'});const safeItems=items.map(i=>{const p=products.find(x=>x.id===i.id);return p?{id:p.id,name:p.name,price:p.price,qty:Math.max(1,Math.min(99,Number(i.qty)||1))}:null}).filter(Boolean);if(!safeItems.length)return res.status(400).json({error:'Sản phẩm không còn tồn tại'});const order={id:orders.length+1,ctvCode:c.code,ctvName:c.name,items:safeItems,note:String(note||'').slice(0,500),createdAt:Date.now()};orders.push(order);db.save('orders.json',orders);const sum=safeItems.reduce((s,i)=>s+i.price*i.qty,0);if(ADMIN_CHAT_ID)bot.telegram.sendMessage(ADMIN_CHAT_ID,`🔔 <b>ĐƠN MỚI #${order.id}</b>\n👤 CTV: <b>${c.name}</b>\n\n${safeItems.map(i=>`• ${i.name} ×${i.qty} — ${money(i.price*i.qty)}`).join('\n')}\n\n💰 <b>Tổng: ${money(sum)}</b>\n📝 ${order.note||'Không ghi chú'}`,{parse_mode:'HTML'}).catch(e=>console.error(e.message));res.json({ok:true,orderId:order.id})});
+
+app.get('/api/miniapp/bootstrap',miniAdmin,(req,res)=>{
+  const revenue=orders.reduce((s,o)=>s+o.items.reduce((a,i)=>a+i.price*i.qty,0),0);
+  res.json({ok:true,admin:{id:req.tgUser.id,name:[req.tgUser.first_name,req.tgUser.last_name].filter(Boolean).join(' ')},stats:{products:products.length,ctvs:ctvs.length,orders:orders.length,revenue},products,ctvs:ctvs.map(c=>({code:c.code,name:c.name,platform:c.platform||'Chưa rõ',bound:!!c.deviceId,lastSeen:c.lastSeen||null})),orders:orders.slice(-20).reverse()});
+});
+app.post('/api/miniapp/product',miniAdmin,(req,res)=>{
+  const {action,id,name,price,image,category}=req.body||{};
+  if(action==='delete'){products=products.filter(p=>p.id!==id);db.save('products.json',products);return res.json({ok:true});}
+  if(action==='update'){const p=products.find(x=>x.id===id);if(!p)return res.status(404).json({error:'Không tìm thấy sản phẩm'});if(name!=null)p.name=String(name).slice(0,120);if(price!=null){const n=Number(price);if(!n)return res.status(400).json({error:'Giá không hợp lệ'});p.price=n}if(image!=null)p.image=cleanImage(image);if(category&&['nu','nam','unisex'].includes(category))p.category=category;db.save('products.json',products);return res.json({ok:true,product:p});}
+  if(action==='add'){if(!name||!Number(price))return res.status(400).json({error:'Thiếu tên/giá'});const p={id:crypto.randomBytes(3).toString('hex'),name:String(name).slice(0,120),price:Number(price),image:cleanImage(image),category:['nu','nam','unisex'].includes(category)?category:'unisex',createdAt:Date.now()};products.push(p);db.save('products.json',products);return res.json({ok:true,product:p});}
+  res.status(400).json({error:'Action không hợp lệ'});
+});
+app.post('/api/miniapp/ctv/unbind',miniAdmin,(req,res)=>{const c=findCtv(req.body.code);if(!c)return res.status(404).json({error:'Không tìm thấy CTV'});delete c.deviceId;delete c.platform;delete c.lastSeen;db.save('ctv.json',ctvs);res.json({ok:true});});
+
 app.get('/health',(req,res)=>res.json({ok:true,products:products.length,ctvs:ctvs.length}));
 app.listen(PORT,()=>console.log('Web running on '+PORT));
 process.once('SIGINT',()=>bot.stop('SIGINT'));process.once('SIGTERM',()=>bot.stop('SIGTERM'));
