@@ -1,1 +1,47 @@
-<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0b0712"><title>Miumeoshop Mini App</title><script src="https://telegram.org/js/telegram-web-app.js"></script><link rel="stylesheet" href="miniapp.css"></head><body><div class="bg"></div><main class="app"><header class="hero"><div><div class="eyebrow">MIUMEO • MINI APP</div><h1>Quản lý shop <span>⚡</span></h1><p id="adminName">Đang kết nối Telegram…</p></div><button id="refresh" class="glassbtn">↻</button></header><section id="stats" class="stats"></section><nav class="tabs"><button class="active" data-tab="products">📦 Sản phẩm</button><button data-tab="ctvs">👥 CTV</button><button data-tab="orders">🧾 Đơn</button></nav><section id="products" class="panel"></section><section id="ctvs" class="panel hidden"></section><section id="orders" class="panel hidden"></section></main><button id="fab">＋</button><div id="modal" class="modal hidden"><div class="sheet"><div class="sheethead"><h2 id="modalTitle">Thêm sản phẩm</h2><button id="close">×</button></div><label>Tên sản phẩm<input id="name" placeholder="Áo baby tee"></label><label>Giá CTV<input id="price" type="number" inputmode="numeric" placeholder="129000"></label><label>Danh mục<select id="category"><option value="nu">🎀 Đồ nữ</option><option value="nam">🖤 Đồ nam</option><option value="unisex">🤍 Unisex</option></select></label><label>Ảnh sản phẩm<div class="upload"><input id="imageFile" type="file" accept="image/*"><span>📷 Chọn ảnh từ thư viện</span></div></label><img id="preview" class="preview hidden"><input id="editId" type="hidden"><button id="save" class="primary">✨ Lưu sản phẩm</button></div></div><div id="toast" class="toast"></div><script src="miniapp.js"></script></body></html>
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b0712"><title>MIUMEO • Mini App</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script><link rel="stylesheet" href="miniapp.css">
+</head>
+<body>
+<div class="aurora a1"></div><div class="aurora a2"></div><div class="grain"></div>
+<main class="app">
+  <header class="topbar">
+    <div class="brand"><img src="assets/logo.png" onerror="this.style.display='none'"><div><div class="eyebrow">MIUMEO SHOP</div><h1>Admin Studio <span>✦</span></h1><p id="adminName">Đang kết nối…</p></div></div>
+    <button id="refresh" class="iconbtn" aria-label="Làm mới">↻</button>
+  </header>
+
+  <section class="heroCard">
+    <div><span class="pill">⚡ QUẢN LÝ NHANH</span><h2>Đăng sản phẩm<br><em>siêu tốc.</em></h2><p>Chọn nhiều ảnh cùng lúc, đặt giá chung và thêm hàng loạt chỉ trong vài giây.</p></div>
+    <button id="bulkOpen" class="heroBtn">＋ Nhập hàng loạt</button>
+  </section>
+
+  <section id="stats" class="stats"></section>
+  <nav class="tabs"><button class="active" data-tab="products">▦ <span>Sản phẩm</span></button><button data-tab="ctvs">♙ <span>CTV</span></button><button data-tab="orders">⌁ <span>Đơn hàng</span></button></nav>
+  <section id="products" class="panel"></section><section id="ctvs" class="panel hidden"></section><section id="orders" class="panel hidden"></section>
+</main>
+<button id="fab" aria-label="Thêm sản phẩm">＋</button>
+
+<div id="modal" class="modal hidden"><div class="sheet">
+  <div class="sheethead"><div><span class="miniLabel">PRODUCT</span><h2 id="modalTitle">Thêm sản phẩm</h2></div><button id="close">×</button></div>
+  <div class="formgrid"><label>Tên sản phẩm<input id="name" placeholder="Áo baby tee"></label><label>Giá CTV<input id="price" type="number" inputmode="numeric" placeholder="129000"></label></div>
+  <label>Danh mục<select id="category"><option value="nu">🎀 Đồ nữ</option><option value="nam">🖤 Đồ nam</option><option value="unisex">🤍 Unisex</option></select></label>
+  <label>Ảnh sản phẩm<div class="upload"><input id="imageFile" type="file" accept="image/*"><div class="uploadIcon">⌁</div><b>Chạm để chọn ảnh</b><small>Ảnh sẽ tự nén để tải nhanh</small></div></label>
+  <img id="preview" class="preview hidden"><input id="editId" type="hidden"><button id="save" class="primary">✨ Lưu sản phẩm</button>
+</div></div>
+
+<div id="bulkModal" class="modal hidden"><div class="sheet bulkSheet">
+  <div class="sheethead"><div><span class="miniLabel">BULK IMPORT</span><h2>Thêm nhiều sản phẩm</h2></div><button id="bulkClose">×</button></div>
+  <div class="quickTip"><b>⚡ Cách nhanh nhất</b><br>Chọn cùng lúc nhiều ảnh → đặt <b>giá chung</b> + <b>loại hàng</b> → xem trước → thêm tất cả.</div>
+  <div class="formgrid"><label>Giá chung<input id="bulkPrice" type="number" inputmode="numeric" placeholder="129000"></label><label>Danh mục<select id="bulkCategory"><option value="nu">🎀 Đồ nữ</option><option value="nam">🖤 Đồ nam</option><option value="unisex">🤍 Unisex</option></select></label></div>
+  <div class="bulkUpload"><input id="bulkFiles" type="file" accept="image/*" multiple><div class="uploadIcon">＋</div><b>Chọn nhiều ảnh cùng lúc</b><small id="bulkHint">Ví dụ 10–20 ảnh / lần</small></div>
+  <div class="nameHelp">Tên sản phẩm mặc định lấy từ tên file. Bạn có thể sửa nhanh ngay dưới từng ảnh.</div>
+  <div id="bulkPreview" class="bulkPreview"></div>
+  <button id="bulkSave" class="primary" disabled>🚀 Thêm tất cả sản phẩm</button>
+</div></div>
+
+<div id="toast" class="toast"></div><div id="loading" class="loading hidden"><div class="spinner"></div><b id="loadingText">Đang xử lý…</b><small>Đừng đóng Mini App</small></div>
+<script src="miniapp.js"></script>
+</body></html>
