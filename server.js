@@ -7,7 +7,7 @@ const BOT_TOKEN=process.env.BOT_TOKEN,ADMIN_CHAT_ID=process.env.ADMIN_CHAT_ID,AD
 if(!BOT_TOKEN){console.error('Thieu BOT_TOKEN');process.exit(1)}
 let products=db.load('products.json',[]).map(p=>({...p,category:p.category||'unisex'}));
 let ctvs=db.load('ctv.json',[]);let orders=db.load('orders.json',[]);
-const bot=new Telegraf(BOT_TOKEN);const app=express();app.use(express.json({limit:'8mb'}));app.use(express.static('public'));
+const bot=new Telegraf(BOT_TOKEN);const app=express();app.use(express.json({limit:'15mb'}));app.use(express.static('public'));
 const isAdmin=ctx=>ADMIN_CHAT_ID&&String(ctx.chat?.id)===String(ADMIN_CHAT_ID);const money=n=>Number(n||0).toLocaleString('vi-VN')+'đ';
 const menu=()=>Markup.inlineKeyboard([[MINIAPP_URL?Markup.button.webApp('🚀 Mở Mini App',MINIAPP_URL):Markup.button.callback('📱 Mini App chưa cấu hình','help')],[Markup.button.callback('➕ Thêm sản phẩm','add_help'),Markup.button.callback('📦 Sản phẩm','products')],[Markup.button.callback('👥 CTV','ctvs'),Markup.button.callback('🧾 Đơn hàng','orders')],[Markup.button.callback('📊 Thống kê','stats'),Markup.button.callback('❓ Hướng dẫn','help')]]);
 const catKeyboard=id=>Markup.inlineKeyboard([[Markup.button.callback('🎀 Nữ','cat_nu_'+id),Markup.button.callback('🖤 Nam','cat_nam_'+id)],[Markup.button.callback('🤍 Unisex','cat_unisex_'+id)]]);
@@ -80,6 +80,21 @@ app.post('/api/miniapp/product',miniAdmin,(req,res)=>{
   res.status(400).json({error:'Action không hợp lệ'});
 });
 app.post('/api/miniapp/ctv/unbind',miniAdmin,(req,res)=>{const c=findCtv(req.body.code);if(!c)return res.status(404).json({error:'Không tìm thấy CTV'});delete c.deviceId;delete c.platform;delete c.lastSeen;db.save('ctv.json',ctvs);res.json({ok:true});});
+app.post('/api/miniapp/products/bulk',miniAdmin,(req,res)=>{
+  const list=Array.isArray(req.body?.products)?req.body.products:[];
+  if(!list.length)return res.status(400).json({error:'Chưa có sản phẩm để thêm'});
+  if(list.length>30)return res.status(400).json({error:'Mỗi lần tối đa 30 sản phẩm'});
+  const added=[];
+  for(const item of list){
+    const name=String(item.name||'').trim().slice(0,120);
+    const price=Number(item.price);
+    if(!name||!price)continue;
+    const p={id:crypto.randomBytes(3).toString('hex'),name,price,image:cleanImage(item.image),category:['nu','nam','unisex'].includes(item.category)?item.category:'unisex',createdAt:Date.now()};
+    products.push(p);added.push(p);
+  }
+  db.save('products.json',products);
+  res.json({ok:true,count:added.length,products:added});
+});
 
 app.get('/health',(req,res)=>res.json({ok:true,products:products.length,ctvs:ctvs.length}));
 app.listen(PORT,()=>console.log('Web running on '+PORT));
